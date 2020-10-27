@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-html",
-  "version": "1.0.0-beta.1",
-  "description": "A simple vite plugin. It is developed based on lodash template",
+  "version": "1.0.0-beta.2",
+  "description": "A plugin for vite to Minimize index.html and use lodash.template template syntax in index.html",
   "main": "dist/index.js",
   "files": [
     "dist"
