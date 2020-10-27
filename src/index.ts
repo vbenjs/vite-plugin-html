@@ -33,8 +33,8 @@ export default (opt: VitePluginHtml = {}): Plugin => {
       },
       {
         apply: 'post',
-        transform: ({ code }) => {
-          const { title = '', minify } = opt;
+        transform: ({ code, isBuild }) => {
+          const { title = '', minify = isBuild } = opt;
           try {
             let processCode = injectTitle(code, title);
             if (!minify) {

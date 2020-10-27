@@ -60,7 +60,7 @@ description: The content of the title tag of the index.html tag
 
 type: `boolean|Options`, [Options](https://github.com/terser/html-minifier-terser#options-quick-reference)
 
-default: `false` .
+default: `isBuild?true:false` .
 
 If it is an object type，Default:
 
@@ -86,7 +86,9 @@ description: User-defined configuration variables. You can use `viteHtmlPluginOp
 
 Html Use [lodash.template](https://lodash.com/docs/4.17.15#template) syntax for template processing
 
-e g **vite.config.ts**
+e g
+
+**vite.config.ts**
 
 ```ts
 import VitePluginHtml from 'vite-plugin-html';
@@ -112,7 +114,7 @@ export default {
     <%= viteHtmlPluginOptions.opt1 %>
   </head>
   <body>
-    <%= viteHtmlPluginOptions.opt1 %>
+    <%= viteHtmlPluginOptions.opt2 %>
   </body>
 </html>
 ```
