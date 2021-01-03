@@ -8,7 +8,7 @@ A simple vite plugin. It is developed based on lodash template
 
 **node version:** >=12.0.0
 
-**vite version:** >=1.0.0.rc8
+**vite version:** >=2.0.0-beta.3
 
 `yarn add vite-plugin-html -D` or `npm i vite-plugin-html -D`
 
