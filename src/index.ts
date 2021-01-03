@@ -1,11 +1,12 @@
-import { Plugin } from 'vite';
-import { VitePluginHtml } from './types';
+import type { Plugin, ResolvedConfig } from 'vite';
+import type { VitePluginHtml } from './types';
+
 import { template, isBoolean } from 'lodash';
 import { injectTitle } from './utils';
 import { minify as HtmlMinify, Options } from 'html-minifier-terser';
-import debug from 'debug';
+// import debug from 'debug';
 
-const log = debug('vite:html');
+// const log = debug('vite:html');
 
 const defaultMinifyOptions: Options = {
   minifyCSS: true,
@@ -17,24 +18,31 @@ const defaultMinifyOptions: Options = {
 };
 
 export default (opt: VitePluginHtml = {}): Plugin => {
+  let viteConfig: ResolvedConfig | undefined;
+
   return {
     name: 'vite:html',
+    configResolved(config) {
+      viteConfig = config;
+    },
     transformIndexHtml: {
       enforce: 'pre',
-      transform: (html) => {
+      transform: async (html) => {
         const { options = {} } = opt;
 
         let compiledHtml = html;
         try {
+          // Compile using lodash template syntax
+          // Expose options to the viteHtmlPluginOptions object
           const compiled = template(compiledHtml);
           compiledHtml = compiled({
             viteHtmlPluginOptions: options,
           });
         } catch (error) {
-          log('Template  compiled fail\n' + error);
+          console.error('Template  compiled fail\n' + error);
         }
 
-        const { title = '', minify = false, tags = [] } = opt;
+        const { title = '', minify = viteConfig?.command === 'build', tags = [] } = opt;
         try {
           let processCode = injectTitle(compiledHtml, title);
           if (!minify) {
@@ -43,6 +51,8 @@ export default (opt: VitePluginHtml = {}): Plugin => {
               tags,
             };
           }
+
+          // minify code
           if (isBoolean(minify)) {
             return {
               html: HtmlMinify(processCode, defaultMinifyOptions),
@@ -57,7 +67,7 @@ export default (opt: VitePluginHtml = {}): Plugin => {
             tags,
           };
         } catch (error) {
-          log('Template transform fail\n' + error);
+          console.error('Template transform fail\n' + error);
           return { html: compiledHtml, tags };
         }
       },

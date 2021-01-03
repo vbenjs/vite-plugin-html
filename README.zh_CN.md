@@ -1,12 +1,12 @@
 # vite-plugin-html
 
-**English** | [中文](./README.zh_CN.md)
+**中文** | [English](./README.md)
 
 [![npm][npm-img]][npm-url] [![node][node-img]][node-url]
 
-A vite plugin for processing html. It is developed based on lodash template
+一个处理 HTML 的 Vite 插件。它基于 lodash 模板开发
 
-### Install (yarn or npm)
+### 安装 (yarn or npm)
 
 **node version:** >=12.0.0
 
@@ -14,9 +14,9 @@ A vite plugin for processing html. It is developed based on lodash template
 
 `yarn add vite-plugin-html@next -D` or `npm i vite-plugin-html@next -D`
 
-### Example
+### 示例
 
-**Run Example**
+**运行示例**
 
 ```bash
 
@@ -28,9 +28,9 @@ yarn serve
 
 ```
 
-## Usage
+## 使用
 
-- Config plugin in vite.config.ts
+- `vite.config.ts` 中的配置插件
 
 ```ts
 import { UserConfigExport, ConfigEnv } from 'vite';
@@ -64,7 +64,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
 };
 ```
 
-### Options Description
+### 选项说明
 
 **title**
 
@@ -72,7 +72,7 @@ type: `string`
 
 default: ''
 
-description: The content of the title tag of the index.html tag
+description: `index.html`内`title`标签内容
 
 **minify**
 
@@ -80,7 +80,7 @@ type: `boolean|Options`, [Options](https://github.com/terser/html-minifier-terse
 
 default: `command === 'build'` .
 
-If it is an object type，Default:
+如果是对象类型，则默认以下配置，可以覆盖
 
 ```ts
   minifyCSS: true,
@@ -92,7 +92,7 @@ If it is an object type，Default:
 
 ```
 
-description: html compression configuration
+description: html 压缩配置
 
 **options**
 
@@ -100,9 +100,9 @@ type: `Record<string,any>`,
 
 default: `{}`
 
-description: User-defined configuration variables. You can use `viteHtmlPluginOptions.xxx` in `index.html` to get
+description: 用户定义的配置变量。您可以在 index.html 中使用`viteHtmlPluginOptions.xxx`来获取
 
-Html Use [lodash.template](https://lodash.com/docs/4.17.15#template) syntax for template processing
+HTML 使用[lodash.template](https://lodash.com/docs/4.17.15#template)语法进行模板处理
 
 **tags**
 
@@ -120,7 +120,7 @@ interface HtmlTagDescriptor {
 }
 ```
 
-description: An array of tag descriptor objects ({ tag, attrs, children }) to inject to the existing HTML. Each tag can also specify where it should be injected to (default is prepending to `<head>`)
+description：要插入到现有 HTML 的标记描述符对象（{tag，attrs，children}）的数组。每个标签还可以指定应将标签注入到何处（默认情况是在前面添加<head>）。
 
 e.g
 

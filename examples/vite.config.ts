@@ -9,7 +9,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
       vue(),
       html({
         title: 'Vite App',
-        minify: mode === 'production',
+        minify: command === 'build',
         options: {
           injectConfig: '<script src="./a.js"></script>',
         },
