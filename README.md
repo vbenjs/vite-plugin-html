@@ -86,7 +86,25 @@ description: User-defined configuration variables. You can use `viteHtmlPluginOp
 
 Html Use [lodash.template](https://lodash.com/docs/4.17.15#template) syntax for template processing
 
-e g
+**tags**
+
+type: HtmlTagDescriptor[]
+
+```ts
+interface HtmlTagDescriptor {
+  tag: string;
+  attrs?: Record<string, string>;
+  children?: string | HtmlTagDescriptor[];
+  /**
+   * default: 'head-prepend'
+   */
+  injectTo?: 'head' | 'body' | 'head-prepend';
+}
+```
+
+description: An array of tag descriptor objects ({ tag, attrs, children }) to inject to the existing HTML. Each tag can also specify where it should be injected to (default is prepending to `<head>`)
+
+e.g
 
 **vite.config.ts**
 

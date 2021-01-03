@@ -3,6 +3,9 @@ import { VitePluginHtml } from './types';
 import { template, isBoolean } from 'lodash';
 import { injectTitle } from './utils';
 import { minify as HtmlMinify, Options } from 'html-minifier-terser';
+import debug from 'debug';
+
+const log = debug('vite:html');
 
 const defaultMinifyOptions: Options = {
   minifyCSS: true,
@@ -15,45 +18,50 @@ const defaultMinifyOptions: Options = {
 
 export default (opt: VitePluginHtml = {}): Plugin => {
   return {
-    indexHtmlTransforms: [
-      {
-        apply: 'pre',
-        transform: ({ code }) => {
-          const { options = {} } = opt;
-          try {
-            const compiled = template(code);
-            return compiled({
-              viteHtmlPluginOptions: options,
-            });
-          } catch (error) {
-            console.warn('[vite-plugin-html:pre]:Template Compiled Faild\n' + error);
-            return code;
+    name: 'vite:html',
+    transformIndexHtml: {
+      enforce: 'pre',
+      transform: (html) => {
+        const { options = {} } = opt;
+
+        let compiledHtml = html;
+        try {
+          const compiled = template(compiledHtml);
+          compiledHtml = compiled({
+            viteHtmlPluginOptions: options,
+          });
+        } catch (error) {
+          log('Template  compiled fail\n' + error);
+        }
+
+        const { title = '', minify = false, tags = [] } = opt;
+        try {
+          let processCode = injectTitle(compiledHtml, title);
+          if (!minify) {
+            return {
+              html: processCode,
+              tags,
+            };
           }
-        },
-      },
-      {
-        apply: 'post',
-        transform: ({ code, isBuild }) => {
-          const { title = '', minify = isBuild } = opt;
-          try {
-            let processCode = injectTitle(code, title);
-            if (!minify) {
-              return processCode;
-            }
-            if (isBoolean(minify)) {
-              return HtmlMinify(processCode, defaultMinifyOptions);
-            }
-            return HtmlMinify(processCode, {
+          if (isBoolean(minify)) {
+            return {
+              html: HtmlMinify(processCode, defaultMinifyOptions),
+              tags,
+            };
+          }
+          return {
+            html: HtmlMinify(processCode, {
               ...defaultMinifyOptions,
               ...minify,
-            });
-          } catch (error) {
-            console.warn('[vite-plugin-html:post]:Template Compiled Faild\n' + error);
-            return code;
-          }
-        },
+            }),
+            tags,
+          };
+        } catch (error) {
+          log('Template transform fail\n' + error);
+          return { html: compiledHtml, tags };
+        }
       },
-    ],
+    },
   };
 };
 

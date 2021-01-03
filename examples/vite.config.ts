@@ -1,15 +1,27 @@
-import { UserConfig } from 'vite';
-import VitePluginHtml from 'vite-plugin-html';
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 
-const config: UserConfig = {
+import html from '../src/index';
+
+export default defineConfig({
   plugins: [
-    VitePluginHtml({
+    vue(),
+    html({
       title: 'Vite App',
-      minify: process.env.NODE_ENV === 'production',
+      minify: true,
       options: {
         injectConfig: '<script src="./a.js"></script>',
       },
+      // tags: [
+      //   {
+      //     tag: 'div',
+      //     attrs: {
+      //       src: './',
+      //     },
+      //     children: '1',
+      //     injectTo: 'body',
+      //   },
+      // ],
     }),
   ],
-};
-export default config;
+});
