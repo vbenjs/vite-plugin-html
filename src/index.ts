@@ -23,9 +23,6 @@ export default (opt: VitePluginHtml = {}): Plugin[] => {
   return [
     {
       name: 'vite:html-pre',
-      configResolved(config) {
-        viteConfig = config;
-      },
       transformIndexHtml: {
         enforce: 'pre',
         transform: async (html) => {
