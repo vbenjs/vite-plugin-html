@@ -17,62 +17,76 @@ const defaultMinifyOptions: Options = {
   collapseWhitespace: true,
 };
 
-export default (opt: VitePluginHtml = {}): Plugin => {
+export default (opt: VitePluginHtml = {}): Plugin[] => {
   let viteConfig: ResolvedConfig | undefined;
 
-  return {
-    name: 'vite:html',
-    configResolved(config) {
-      viteConfig = config;
-    },
-    transformIndexHtml: {
-      enforce: 'pre',
-      transform: async (html) => {
-        const { options = {} } = opt;
+  return [
+    {
+      name: 'vite:html-pre',
+      configResolved(config) {
+        viteConfig = config;
+      },
+      transformIndexHtml: {
+        enforce: 'pre',
+        transform: async (html) => {
+          const { options = {} } = opt;
 
-        let compiledHtml = html;
-        try {
-          // Compile using lodash template syntax
-          // Expose options to the viteHtmlPluginOptions object
-          const compiled = template(compiledHtml);
-          compiledHtml = compiled({
-            viteHtmlPluginOptions: options,
-          });
-        } catch (error) {
-          console.error('Template  compiled fail\n' + error);
-        }
-
-        const { title = '', minify = viteConfig?.command === 'build', tags = [] } = opt;
-        try {
-          let processCode = injectTitle(compiledHtml, title);
-          if (!minify) {
-            return {
-              html: processCode,
-              tags,
-            };
+          let compiledHtml = html;
+          try {
+            // Compile using lodash template syntax
+            // Expose options to the viteHtmlPluginOptions object
+            const compiled = template(compiledHtml);
+            compiledHtml = compiled({
+              viteHtmlPluginOptions: options,
+            });
+          } catch (error) {
+            console.error('Template  compiled fail\n' + error);
           }
-
-          // minify code
-          if (isBoolean(minify)) {
-            return {
-              html: HtmlMinify(processCode, defaultMinifyOptions),
-              tags,
-            };
-          }
-          return {
-            html: HtmlMinify(processCode, {
-              ...defaultMinifyOptions,
-              ...minify,
-            }),
-            tags,
-          };
-        } catch (error) {
-          console.error('Template transform fail\n' + error);
-          return { html: compiledHtml, tags };
-        }
+          return compiledHtml;
+        },
       },
     },
-  };
+    {
+      name: 'vite:html-post',
+      configResolved(config) {
+        viteConfig = config;
+      },
+      transformIndexHtml: {
+        enforce: 'post',
+        transform: async (html) => {
+          let compiledHtml = html;
+          const { title = '', minify = viteConfig?.command === 'build', tags = [] } = opt;
+          try {
+            let processCode = injectTitle(compiledHtml, title);
+            if (!minify) {
+              return {
+                html: processCode,
+                tags,
+              };
+            }
+
+            // minify code
+            if (isBoolean(minify)) {
+              return {
+                html: HtmlMinify(processCode, defaultMinifyOptions),
+                tags,
+              };
+            }
+            return {
+              html: HtmlMinify(processCode, {
+                ...defaultMinifyOptions,
+                ...minify,
+              }),
+              tags,
+            };
+          } catch (error) {
+            console.error('Template transform fail\n' + error);
+            return { html: compiledHtml, tags };
+          }
+        },
+      },
+    },
+  ];
 };
 
 export * from './types';

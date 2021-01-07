@@ -11,3 +11,8 @@
     },
   });
 </script>
+<style>
+  a {
+    color: red;
+  }
+</style>
