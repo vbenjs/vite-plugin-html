@@ -26,7 +26,7 @@ export default (opt: VitePluginHtml = {}): Plugin[] => {
       transformIndexHtml: {
         enforce: 'pre',
         transform: async (html) => {
-          const { options = {} } = opt;
+          const { options = {}, title } = opt;
 
           let compiledHtml = html;
           try {
@@ -34,7 +34,10 @@ export default (opt: VitePluginHtml = {}): Plugin[] => {
             // Expose options to the viteHtmlPluginOptions object
             const compiled = template(compiledHtml);
             compiledHtml = compiled({
-              viteHtmlPluginOptions: options,
+              viteHtmlPluginOptions: {
+                title,
+                ...options,
+              },
             });
           } catch (error) {
             console.error('Template  compiled fail\n' + error);
