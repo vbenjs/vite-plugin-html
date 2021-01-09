@@ -38,7 +38,7 @@ export default defineConfig({
 });
 ```
 
-- If you don’t want to separate, you can directly introduce it as a whole
+- If you don’t want to separate, you can directly Import it as a whole
 
 ```ts
 import { defineConfig, Plugin } from 'vite';
