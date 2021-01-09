@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-html",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0-beta.5",
   "description": "A plugin for vite to Minimize index.html and use lodash.template template syntax in index.html",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,18 +26,18 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/anncwb/vite-plugin-html"
+    "url": "https://github.com/vbenjs/vite-plugin-html"
   },
   "bugs": {
-    "url": "https://github.com/anncwb/vite-plugin-html/issues"
+    "url": "https://github.com/vbenjs/vite-plugin-html/issues"
   },
-  "homepage": "https://github.com/anncwb/vite-plugin-html/tree/master/#readme",
+  "homepage": "https://github.com/vbenjs/vite-plugin-html/tree/master/#readme",
   "dependencies": {
     "ejs": "^3.1.5",
     "html-minifier-terser": "^5.1.1"
   },
   "peerDependencies": {
-    "vite": ">=2.0.0-beta.3"
+    "vite": ">=2.0.0-beta.15"
   },
   "devDependencies": {
     "@types/ejs": "^3.0.5",
@@ -47,6 +47,6 @@
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.1.3",
-    "vite": "^2.0.0-beta.12"
+    "vite": "^2.0.0-beta.15"
   }
 }

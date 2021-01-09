@@ -10,33 +10,88 @@ A Vite plugin for index.html that provides minify and EJS template-based functio
 
 **node version:** >=12.0.0
 
-**vite version:** >=2.0.0-beta.4
+**vite version:** >=2.0.0-beta.13
 
 `yarn add vite-plugin-html@next -D` or `npm i vite-plugin-html@next -D`
 
-
 ## Usage
 
-- Config plugin in vite.config.ts
+- Config plugin in vite.config.ts. In this way, the required functions can be introduced as needed
 
 ```ts
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig, Plugin } from 'vite';
+import vue from '@vitejs/plugin-vue';
 
-import { minifyHtml, injectHtml } from '../src/index'
+import { minifyHtml, injectHtml } from '../src/index';
 
 export default defineConfig({
   plugins: [
     vue(),
     minifyHtml(),
     injectHtml({
-      title: 'vite-plugin-html-example',
-      injectScript: '<script src="./inject.js"></script>'
-    })
-  ]
-})
+      injectData: {
+        title: 'vite-plugin-html-example',
+        injectScript: '<script src="./inject.js"></script>',
+      },
+    }),
+  ],
+});
 ```
 
+- If you don’t want to separate, you can directly introduce it as a whole
+
+```ts
+import { defineConfig, Plugin } from 'vite';
+import vue from '@vitejs/plugin-vue';
+
+import html from '../src/index';
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    html({
+      inject: {
+        injectData: {
+          title: 'vite-plugin-html-example',
+          injectScript: '<script src="./inject.js"></script>',
+        },
+      },
+      minify: true,
+    }),
+  ],
+});
+```
+
+## injectHtml Parameter Description
+
+`injectHtml(InjectOptions)`
+
+**InjectOptions**
+
+| Parameter | Types | Default | Description |
+| --- | --- | --- | --- |
+| injectData | `Record<string, any>` | - | Injected data |
+| injectOptions | `EJSOptions` | - | ejs configuration items[EJSOptions](https://github.com/mde/ejs#options) |
+| tags | `HtmlTagDescriptor` | - | An array of tag descriptor objects ({ tag, attrs, children }) to inject to the existing HTML. Each tag can also specify where it should be injected to (default is prepending to `<head>`)） |
+
+## minifyHtml Parameter Description
+
+`minifyHtml(MinifyOptions | boolean)`: Default`true`
+
+**MinifyOptions**
+
+Default compression configuration
+
+```ts
+  collapseBooleanAttributes: true,
+  collapseWhitespace: true,
+  minifyCSS: true,
+  minifyJS: true,
+  minifyURLs: true,
+  removeAttributeQuotes: true,
+  removeComments: true,
+  removeEmptyAttributes: true,
+```
 
 ## Example
 
@@ -51,7 +106,6 @@ yarn install
 yarn serve
 
 ```
-
 
 ## License
 
