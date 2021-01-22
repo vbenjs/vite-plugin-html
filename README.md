@@ -107,6 +107,10 @@ yarn serve
 
 ```
 
+## Sample project
+
+[Vben Admin](https://github.com/anncwb/vue-vben-admin)
+
 ## License
 
 MIT
