@@ -21,10 +21,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@vitejs/plugin-vue@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/@vitejs/plugin-vue/-/plugin-vue-1.0.4.tgz#124b06b185a8b536210bdb00948c17e52ab589fe"
-  integrity sha512-VaXpbmriAOeCdstHKjw3L8/8GZ33fcshBbWlN6IocKQW+GOGV4Xm8Vp0Oa/VpPVCSTHMcqvKyQ4gGEBpDHdWHg==
+"@vitejs/plugin-vue@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@vitejs/plugin-vue/-/plugin-vue-1.1.0.tgz#8ae0b11388897b07259c9e5198c0e3fb5e4b37d9"
+  integrity sha512-ExlAt3nb3PB31jV9AgRZSMoGd+aQRU53fc/seghV8/l0JCzaX2mqlgpG8iytWkRxbBPgtAx4TpCPdiVKnTFT/A==
 
 "@vue/compiler-core@3.0.5":
   version "3.0.5"
@@ -154,7 +154,7 @@ consolidate@^0.16.0:
   dependencies:
     bluebird "^3.7.2"
 
-cross-env@^7.0.2:
+cross-env@^7.0.3:
   version "7.0.3"
   resolved "https://registry.npmjs.org/cross-env/-/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
   integrity sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==
@@ -487,10 +487,10 @@ util-deprecate@^1.0.2:
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
 
-vite@^2.0.0-beta.15:
-  version "2.0.0-beta.15"
-  resolved "https://registry.npmjs.org/vite/-/vite-2.0.0-beta.15.tgz#cd2f1037b4767538839b4c6b4f71a1f9512c7654"
-  integrity sha512-S+NRqL+/QZooWbshnB/Rht1Ln0ldyUcGwghwprvmzI4fXAfM0rFU5g6uno0DdueYnHn0jDO3ExQktGyQuNb9Ww==
+vite@^2.0.0-beta.36:
+  version "2.0.0-beta.36"
+  resolved "https://registry.npmjs.org/vite/-/vite-2.0.0-beta.36.tgz#ccecac854ded0b7c0fe14c52c0460e1c23a9c70b"
+  integrity sha512-+Q/Twq1/tpNQIZl0HSFTqiEuP7lXj+6H/f9q63+s5I2K/sqgSUajL3PL7W9uUUIv9dYpJ1eLqkO42ppH9w9Ldw==
   dependencies:
     esbuild "^0.8.26"
     postcss "^8.2.1"

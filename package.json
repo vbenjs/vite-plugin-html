@@ -1,8 +1,9 @@
 {
   "name": "vite-plugin-html",
-  "version": "2.0.0-beta.5",
+  "version": "2.0.0-beta.6",
   "description": "A plugin for vite to Minimize index.html and use lodash.template template syntax in index.html",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
@@ -11,10 +12,12 @@
     "README.zh_CN.md"
   ],
   "scripts": {
-    "dev": "rimraf dist && tsc -w",
-    "build": "rimraf dist && tsc",
+    "dev": "npm run build -- --watch",
+    "build": "tsup src/index.ts --dts --format cjs,esm",
     "prepublishOnly": "yarn build",
-    "log": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+    "log": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "example:dev": "npm -C example run serve",
+    "example:build": "npm -C example run build"
   },
   "keywords": [
     "vite",
@@ -37,16 +40,18 @@
     "html-minifier-terser": "^5.1.1"
   },
   "peerDependencies": {
-    "vite": ">=2.0.0-beta.15"
+    "vite": ">=2.0.0-beta.32"
   },
   "devDependencies": {
     "@types/ejs": "^3.0.5",
     "@types/html-minifier-terser": "^5.1.1",
-    "@types/node": "^14.14.20",
+    "@types/jsdom": "^16.2.6",
+    "@types/node": "^14.14.22",
     "conventional-changelog-cli": "^2.1.1",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
+    "tsup": "^3.11.0",
     "typescript": "^4.1.3",
-    "vite": "^2.0.0-beta.15"
+    "vite": "^2.0.0-beta.36"
   }
 }
