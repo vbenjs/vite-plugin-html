@@ -2,7 +2,7 @@ import { minify, Options as MinifyOptions } from 'html-minifier-terser';
 import type { Plugin, ResolvedConfig } from 'vite';
 import fs from 'fs-extra';
 import path from 'path';
-import { normalizePath } from 'vite';
+// import { normalizePath } from 'vite';
 
 export function minifyHtml(minifyOptions: MinifyOptions | boolean = true): Plugin {
   let config: ResolvedConfig;
@@ -12,26 +12,6 @@ export function minifyHtml(minifyOptions: MinifyOptions | boolean = true): Plugi
     configResolved(resolvedConfig: ResolvedConfig) {
       config = resolvedConfig;
     },
-    // transformIndexHtml: {
-    //   enforce: 'post',
-    //   transform(html: string) {
-    //     if (!minifyOptions) {
-    //       return html;
-    //     }
-    //     const defaultMinifyOptions = {
-    //       collapseBooleanAttributes: true,
-    //       collapseWhitespace: true,
-    //       minifyCSS: true,
-    //       minifyJS: true,
-    //       minifyURLs: true,
-    //       removeAttributeQuotes: true,
-    //       removeComments: true,
-    //       removeEmptyAttributes: true,
-    //       ...(typeof minifyOptions === 'boolean' ? {} : minifyOptions),
-    //     };
-    //     return minify(html, defaultMinifyOptions);
-    //   },
-    // },
 
     async closeBundle() {
       if (!minifyOptions) {
@@ -53,7 +33,7 @@ export function minifyHtml(minifyOptions: MinifyOptions | boolean = true): Plugi
 
       const { root, build } = config;
       const { outDir } = build;
-      const indexHtmlPath = normalizePath(path.resolve(root, outDir, 'index.html'));
+      const indexHtmlPath = path.resolve(root, outDir, 'index.html');
       if (!fs.existsSync(indexHtmlPath)) {
         console.log('no such file: ' + indexHtmlPath);
         return;
