@@ -10,9 +10,17 @@
 
 **node version:** >=12.0.0
 
-**vite version:** >=2.0.0-beta.4
+**vite version:** >=2.0.0-beta.64
 
-`yarn add vite-plugin-html@next -D` or `npm i vite-plugin-html@next -D`
+```
+yarn add vite-plugin-html -D
+```
+
+或
+
+```
+npm i vite-plugin-html -D
+```
 
 ## 使用
 
@@ -73,6 +81,8 @@ export default defineConfig({
 | injectData | `Record<string, any>` | - | 注入的数据 |
 | injectOptions | `EJSOptions` | - | ejs 配置项[EJSOptions](https://github.com/mde/ejs#options) |
 | tags | `HtmlTagDescriptor` | - | 标记描述符对象（{ tag, attrs, children }）的数组，以插入到现有的 HTML 中。每个标签还可以指定将其注入的位置（默认为`<head>`） |
+
+`injectData` 可以`index.html`中使用`ejs`模版语法获取
 
 ## minifyHtml 参数说明
 

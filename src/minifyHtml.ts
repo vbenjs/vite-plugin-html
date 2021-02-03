@@ -2,7 +2,6 @@ import { minify, Options as MinifyOptions } from 'html-minifier-terser';
 import type { Plugin, ResolvedConfig } from 'vite';
 import fs from 'fs-extra';
 import path from 'path';
-// import { normalizePath } from 'vite';
 
 export function minifyHtml(minifyOptions: MinifyOptions | boolean = true): Plugin {
   let config: ResolvedConfig;
@@ -40,8 +39,7 @@ export function minifyHtml(minifyOptions: MinifyOptions | boolean = true): Plugi
       }
       let processHtml = fs.readFileSync(indexHtmlPath, 'utf-8');
       processHtml = minify(processHtml, defaultMinifyOptions);
-
-      fs.writeFileSync(indexHtmlPath, processHtml);
+      fs.writeFile(indexHtmlPath, processHtml);
     },
   };
 }

@@ -10,9 +10,17 @@ A Vite plugin for index.html that provides minify and EJS template-based functio
 
 **node version:** >=12.0.0
 
-**vite version:** >=2.0.0-beta.13
+**vite version:** >=2.0.0-beta.64
 
-`yarn add vite-plugin-html@next -D` or `npm i vite-plugin-html@next -D`
+```
+yarn add vite-plugin-html -D
+```
+
+or
+
+```
+npm i vite-plugin-html -D
+```
 
 ## Usage
 
@@ -73,6 +81,8 @@ export default defineConfig({
 | injectData | `Record<string, any>` | - | Injected data |
 | injectOptions | `EJSOptions` | - | ejs configuration items[EJSOptions](https://github.com/mde/ejs#options) |
 | tags | `HtmlTagDescriptor` | - | An array of tag descriptor objects ({ tag, attrs, children }) to inject to the existing HTML. Each tag can also specify where it should be injected to (default is prepending to `<head>`)） |
+
+`injectData` can be obtained using the `ejs` template syntax in `index.html`
 
 ## minifyHtml Parameter Description
 

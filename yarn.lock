@@ -101,10 +101,15 @@
   resolved "https://registry.npmjs.org/@types/minimist/-/minimist-1.2.1.tgz#283f669ff76d7b8260df8ab7a4262cc83d988256"
   integrity sha512-fZQQafSREFyuZcdWFAExYjBiCL7AUCdgsk80iO0q4yihYYdcIiH28CcuPTGFgLOCC8RlW49GSQxdHwZP+I7CNg==
 
-"@types/node@*", "@types/node@^14.14.22":
+"@types/node@*":
   version "14.14.22"
   resolved "https://registry.npmjs.org/@types/node/-/node-14.14.22.tgz#0d29f382472c4ccf3bd96ff0ce47daf5b7b84b18"
   integrity sha512-g+f/qj/cNcqKkc3tFqlXOYjrmZA+jNBiDzbP3kH+B+otKFqAdPgVTGP1IeKRdMml/aE69as5S4FqtxAbl+LaMw==
+
+"@types/node@^14.14.24":
+  version "14.14.24"
+  resolved "https://registry.npmjs.org/@types/node/-/node-14.14.24.tgz#541c00e4f7c41c8f108bd5b045248b5224c62946"
+  integrity sha512-6BAlkS4seVjszhrwN0W1WabqWwuJwcYF36Z1rPPyQm80LGRKsIeUPdzI51TezXenjetFNy1gRTpuDn1NBg33LA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -1970,10 +1975,10 @@ tslib@^2.0.3:
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
   integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
-tsup@^3.12.0:
-  version "3.12.0"
-  resolved "https://registry.npmjs.org/tsup/-/tsup-3.12.0.tgz#ee9ffec54cde6c70c070996bccb64fa1ca2aff34"
-  integrity sha512-dqHftKynxk75S1zs9OlGgBA4TbrutxIh6yRUNkDARq6w+vnr6LcPPDGSRbJYO/mle1fRDrprA1ubvjVmRcw7yw==
+tsup@^3.12.1:
+  version "3.12.1"
+  resolved "https://registry.npmjs.org/tsup/-/tsup-3.12.1.tgz#53fac0d325d800c524fd6173bc63a41e2d7b41b3"
+  integrity sha512-W9/XQ7JTEt1iuybQLVk0eNKYBfuIbQ7uvVVyBg6xSEL0XrIdi8sWKj9W2wC8e9KRpXwtQtSZ1a4wnqQMQiIH3w==
   dependencies:
     "@rollup/plugin-node-resolve" "^11.1.0"
     cac "^6.7.1"
@@ -2036,10 +2041,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vite@^2.0.0-beta.56:
-  version "2.0.0-beta.56"
-  resolved "https://registry.npmjs.org/vite/-/vite-2.0.0-beta.56.tgz#b254ec4647ae1383d7c5b6f3fdb01f8971b5bcdd"
-  integrity sha512-MX20PSXT6wTfq37B9d/iTmfAut4kBT6DOquw60zVFRtnO7hR9sNmkM6pmoNyVuYJrlkhKZZqoO2DnYs3C7LKCw==
+vite@^2.0.0-beta.64:
+  version "2.0.0-beta.64"
+  resolved "https://registry.npmjs.org/vite/-/vite-2.0.0-beta.64.tgz#245cabc72335911d4cb704545f713d47e880d84f"
+  integrity sha512-/dR5rOXohhdXfkAIBAjmwX7JmoMWhQc7+VI6/EjyqXQCQzREmfBztLgTk/rPkmsNY87Cd71u9b+nlbcYK4TDCA==
   dependencies:
     esbuild "^0.8.34"
     postcss "^8.2.1"

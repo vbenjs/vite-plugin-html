@@ -21,10 +21,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@vitejs/plugin-vue@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.npmjs.org/@vitejs/plugin-vue/-/plugin-vue-1.1.2.tgz#64d1f0e0739675f5717015ffb4d861c53af8fe60"
-  integrity sha512-a5ORYuPsiAO4Kb2blA/x63mDiBQBxEJkbjhVtiv5IP/I7fGfpwXPPGHx9LHD4MedpXp8icngJYMKO0hOwahtmQ==
+"@vitejs/plugin-vue@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.npmjs.org/@vitejs/plugin-vue/-/plugin-vue-1.1.4.tgz#1dd388519b75439b7733601b55238ca691864796"
+  integrity sha512-cUDILd++9jdhdjpuhgJofQqOabOKe+kTWTE2HQY2PBHEUO2fgwTurLE0cJg9UcIo1x4lHfsp+59S9TBCHgTZkw==
 
 "@vue/compiler-core@3.0.5":
   version "3.0.5"
@@ -487,10 +487,10 @@ util-deprecate@^1.0.2:
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
 
-vite@^2.0.0-beta.56:
-  version "2.0.0-beta.56"
-  resolved "https://registry.npmjs.org/vite/-/vite-2.0.0-beta.56.tgz#b254ec4647ae1383d7c5b6f3fdb01f8971b5bcdd"
-  integrity sha512-MX20PSXT6wTfq37B9d/iTmfAut4kBT6DOquw60zVFRtnO7hR9sNmkM6pmoNyVuYJrlkhKZZqoO2DnYs3C7LKCw==
+vite@^2.0.0-beta.64:
+  version "2.0.0-beta.64"
+  resolved "https://registry.npmjs.org/vite/-/vite-2.0.0-beta.64.tgz#245cabc72335911d4cb704545f713d47e880d84f"
+  integrity sha512-/dR5rOXohhdXfkAIBAjmwX7JmoMWhQc7+VI6/EjyqXQCQzREmfBztLgTk/rPkmsNY87Cd71u9b+nlbcYK4TDCA==
   dependencies:
     esbuild "^0.8.34"
     postcss "^8.2.1"
