@@ -10,7 +10,7 @@ A Vite plugin for index.html that provides minify and EJS template-based functio
 
 **node version:** >=12.0.0
 
-**vite version:** >=2.0.0-beta.64
+**vite version:** >=2.0.0
 
 ```
 yarn add vite-plugin-html -D
