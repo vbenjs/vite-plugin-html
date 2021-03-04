@@ -30,7 +30,7 @@ npm i vite-plugin-html -D
 import { defineConfig, Plugin } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
-import { minifyHtml, injectHtml } from '../src/index';
+import { minifyHtml, injectHtml } from 'vite-plugin-html';
 
 export default defineConfig({
   plugins: [
@@ -52,7 +52,7 @@ export default defineConfig({
 import { defineConfig, Plugin } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
-import html from '../src/index';
+import html from 'vite-plugin-html';
 
 export default defineConfig({
   plugins: [
