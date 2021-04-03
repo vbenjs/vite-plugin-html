@@ -17,7 +17,15 @@
     "prepublishOnly": "yarn build",
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "example:dev": "npm -C example run serve",
-    "example:build": "npm -C example run build"
+    "example:build": "npm -C example run build",
+    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
+    "lint:pretty": "pretty-quick --staged",
+    "lint:eslint": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "install:husky": "is-ci || husky install",
+    "postinstall": "npm run install:husky",
+    "postpublish": "pinst --enable"
   },
   "keywords": [
     "vite",
@@ -44,16 +52,30 @@
     "vite": ">=2.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
     "@types/ejs": "^3.0.6",
     "@types/fs-extra": "^9.0.8",
     "@types/html-minifier-terser": "^5.1.1",
     "@types/jsdom": "^16.2.6",
     "@types/node": "^14.14.31",
     "conventional-changelog-cli": "^2.1.1",
+    "@types/jest": "^26.0.22",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
+    "commitizen": "^4.2.3",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-jest": "^24.3.3",
+    "husky": "^5.2.0",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
     "rimraf": "^3.0.2",
-    "tsup": "^3.12.1",
-    "typescript": "^4.2.2",
-    "vite": "^2.0.4"
+    "ts-jest": "^26.5.4",
+    "tsup": "^4.8.21",
+    "typescript": "^4.2.3",
+    "vite": "^2.1.5"
   }
 }
