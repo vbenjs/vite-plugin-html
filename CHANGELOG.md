@@ -1,15 +1,12 @@
+## [2.0.4](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.2...v2.0.4) (2021-04-05)
+
 ## [2.0.3](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.2...v2.0.3) (2021-03-02)
-
-
 
 ## [2.0.2](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.1...v2.0.2) (2021-02-23)
 
-
 ### Features
 
-* add gihub action ([3569c1c](https://github.com/vbenjs/vite-plugin-html/commit/3569c1c097be457fe91b5bb39c2bd56e61753fc9))
-
-
+- add gihub action ([3569c1c](https://github.com/vbenjs/vite-plugin-html/commit/3569c1c097be457fe91b5bb39c2bd56e61753fc9))
 
 # [2.0.0-rc.1](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.0-beta.2...v2.0.0-rc.1) (2021-01-29)
 
