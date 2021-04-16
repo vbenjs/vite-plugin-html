@@ -1,3 +1,9 @@
+## [2.0.7](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.6...v2.0.7) (2021-04-16)
+
+### Features
+
+- expose minifyFn ([c6409dc](https://github.com/vbenjs/vite-plugin-html/commit/c6409dc25e118b47adff250ab4dd0a239803258b))
+
 ## [2.0.4](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.2...v2.0.4) (2021-04-05)
 
 ## [2.0.3](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.2...v2.0.3) (2021-03-02)
