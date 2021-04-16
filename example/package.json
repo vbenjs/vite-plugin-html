@@ -6,13 +6,13 @@
     "build": "vite build"
   },
   "dependencies": {
-    "vue": "^3.0.7"
+    "vue": "^3.0.11"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.1.5",
-    "@vue/compiler-sfc": "^3.0.7",
+    "@vitejs/plugin-vue": "^1.2.1",
+    "@vue/compiler-sfc": "^3.0.11",
     "cross-env": "^7.0.3",
-    "typescript": "^4.2.2",
-    "vite": "^2.0.4"
+    "typescript": "^4.2.4",
+    "vite": "^2.1.5"
   }
 }
