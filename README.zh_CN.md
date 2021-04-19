@@ -24,13 +24,25 @@ npm i vite-plugin-html -D
 
 ## 使用
 
+- 在 `index.html` 中增加 EJS 标签，例如
+
+```html
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%- title %></title>
+  <%- injectScript %>
+</head>
+```
+
 - 在 `vite.config.ts` 中配置,该方式可以按需引入需要的功能即可
 
 ```ts
 import { defineConfig, Plugin } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
-import { minifyHtml, injectHtml } from '../src/index';
+import { minifyHtml, injectHtml } from 'vite-plugin-html';
 
 export default defineConfig({
   plugins: [
@@ -52,7 +64,7 @@ export default defineConfig({
 import { defineConfig, Plugin } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
-import html from '../src/index';
+import html from 'vite-plugin-html';
 
 export default defineConfig({
   plugins: [
