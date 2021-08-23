@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.6...v2.1.0) (2021-08-20)
+
+### Features
+
+- expose minifyFn ([c6409dc](https://github.com/vbenjs/vite-plugin-html/commit/c6409dc25e118b47adff250ab4dd0a239803258b))
+- **inject:** inject the contents of the .env file into index.html ([5b52d7e](https://github.com/vbenjs/vite-plugin-html/commit/5b52d7e654c1056f6a368f4c7df0de8a63b61874))
+
 ## [2.0.7](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.6...v2.0.7) (2021-04-16)
 
 ### Features

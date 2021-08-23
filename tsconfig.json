@@ -12,6 +12,6 @@
     "sourceMap": false,
     "noEmitOnError": true
   },
-  "include": ["./src"],
+  "include": ["./packages"],
   "exclude": ["**/dist", "**/node_modules", "**/test"]
 }

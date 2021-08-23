@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
 
-import html from '../src/index';
+import html from '../core/dist/index.js'
 
 export default defineConfig({
   plugins: [
@@ -9,11 +9,11 @@ export default defineConfig({
     html({
       minify: true,
       inject: {
-        injectData: {
-          title: 'vite-plugin-html-example',
+        data: {
+          title: 'vite-plugin-html-demo',
           injectScript: `<script src="./inject.js"></script>`,
         },
       },
     }),
   ],
-});
+})

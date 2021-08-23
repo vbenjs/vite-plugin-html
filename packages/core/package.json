@@ -1,0 +1,56 @@
+{
+  "name": "vite-plugin-html",
+  "version": "2.1.0",
+  "description": "A plugin for vite to Minimize index.html and use lodash.template template syntax in index.html",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "README.md",
+    "README.zh_CN.md"
+  ],
+  "scripts": {
+    "dev": "npm run build -- --watch",
+    "build": "tsup",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "vite",
+    "html",
+    "minify",
+    "vite-plugin"
+  ],
+  "author": "Vben",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vbenjs/vite-plugin-html"
+  },
+  "bugs": {
+    "url": "https://github.com/vbenjs/vite-plugin-html/issues"
+  },
+  "homepage": "https://github.com/vbenjs/vite-plugin-html/tree/master/#readme",
+  "dependencies": {
+    "@rollup/pluginutils": "^4.1.1",
+    "dotenv": "^10.0.0",
+    "dotenv-expand": "^5.1.0",
+    "ejs": "^3.1.6",
+    "fs-extra": "^10.0.0",
+    "html-minifier-terser": "^5.1.1"
+  },
+  "peerDependencies": {
+    "vite": ">=2.0.0"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.0",
+    "@types/fs-extra": "^9.0.12",
+    "@types/html-minifier-terser": "^5.1.2",
+    "@types/node": "^16.6.2",
+    "rimraf": "^3.0.2",
+    "tsup": "^4.14.0",
+    "vite": "^2.5.0",
+    "typescript": "^4.3.5"
+  }
+}

@@ -19,8 +19,9 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'jest'],
   rules: {
-    'no-console': 'error',
+    'no-console': 1,
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
-};
+}
