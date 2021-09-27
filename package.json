@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-html-packages",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "private": true,
   "workspaces": [
     "packages/*"

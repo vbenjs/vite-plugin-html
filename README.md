@@ -128,10 +128,11 @@ Default compression configuration
 ### Run Example
 
 ```bash
+yarn
 
 cd ./packages/playground
 
-yarn serve
+yarn dev
 
 ```
 

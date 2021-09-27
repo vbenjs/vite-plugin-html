@@ -128,6 +128,7 @@ export default defineConfig({
 ### 运行示例
 
 ```bash
+yarn
 
 cd ./packages/playground
 
