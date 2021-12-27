@@ -7,7 +7,6 @@ export function minifyHtml(minifyOptions: MinifyOptions | boolean = true): Plugi
     collapseBooleanAttributes: true,
     collapseWhitespace: true,
     minifyCSS: true,
-    minifyJS: true,
     minifyURLs: true,
     removeAttributeQuotes: true,
     removeComments: true,
@@ -28,7 +27,7 @@ export function minifyHtml(minifyOptions: MinifyOptions | boolean = true): Plugi
       if (options) {
         for (const bundle of Object.values(outBundle)) {
           if (bundle.type === 'asset' && filter(bundle.fileName)) {
-            bundle.source = minify(bundle.source as string, options)
+            bundle.source = await minify(bundle.source as string, options)
           }
         }
       }

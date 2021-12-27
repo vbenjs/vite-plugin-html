@@ -1,3 +1,13 @@
+## [2.1.2](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.6...v2.1.2) (2021-12-27)
+
+### Bug Fixes
+
+- ssr error,close [#18](https://github.com/vbenjs/vite-plugin-html/issues/18) ([f799d98](https://github.com/vbenjs/vite-plugin-html/commit/f799d9821ec9b22bbbfd8b92ddcb4d25cc18219e))
+
+### Features
+
+- expose minifyFn ([c6409dc](https://github.com/vbenjs/vite-plugin-html/commit/c6409dc25e118b47adff250ab4dd0a239803258b))
+
 ## [2.1.1](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.6...v2.1.1) (2021-09-27)
 
 ### Features

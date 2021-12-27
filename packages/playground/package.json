@@ -6,10 +6,10 @@
     "build": "vite build"
   },
   "dependencies": {
-    "vue": "^3.2.19"
+    "vue": "^3.2.26"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.9.2",
-    "@vue/compiler-sfc": "^3.2.19"
+    "@vitejs/plugin-vue": "^2.0.1",
+    "@vue/compiler-sfc": "^3.2.26"
   }
 }
