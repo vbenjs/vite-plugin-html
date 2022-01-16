@@ -29,7 +29,14 @@ export interface InjectOptions {
    * @description vite transform tags
    */
   tags?: HtmlTagDescriptor[]
+  pages?: Pages
 }
+
+export interface PageOption {
+  fileName: string
+  template: string
+}
+export type Pages = PageOption[]
 
 export interface Options {
   /**
