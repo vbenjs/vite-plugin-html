@@ -1,24 +1,30 @@
 import type { Plugin } from 'vite'
 import { minify, Options as MinifyOptions } from 'html-minifier-terser'
 import { createFilter } from '@rollup/pluginutils'
+
+function getOptions(minify: boolean) {
+  return {
+    collapseBooleanAttributes: minify,
+    collapseWhitespace: minify,
+    minifyCSS: minify,
+    minifyURLs: minify,
+    removeAttributeQuotes: minify,
+    removeComments: minify,
+    removeEmptyAttributes: minify,
+    html5: minify,
+    keepClosingSlash: minify,
+    removeRedundantAttributes: minify,
+    removeScriptTypeAttributes: minify,
+    removeStyleLinkTypeAttributes: minify,
+    useShortDoctype: minify,
+  }
+}
 export function minifyHtml(minifyOptions: MinifyOptions | boolean = true): Plugin {
   const filter = createFilter(['**/*.html'])
-  const options = {
-    collapseBooleanAttributes: true,
-    collapseWhitespace: true,
-    minifyCSS: true,
-    minifyURLs: true,
-    removeAttributeQuotes: true,
-    removeComments: true,
-    removeEmptyAttributes: true,
-    html5: true,
-    keepClosingSlash: true,
-    removeRedundantAttributes: true,
-    removeScriptTypeAttributes: true,
-    removeStyleLinkTypeAttributes: true,
-    useShortDoctype: true,
-    ...(typeof minifyOptions === 'boolean' ? {} : minifyOptions),
-  }
+  const options =
+    typeof minifyOptions === 'boolean'
+      ? getOptions(minifyOptions)
+      : Object.assign(getOptions(true), minifyOptions)
   return {
     name: 'vite:minify-html',
     // apply: 'build',
