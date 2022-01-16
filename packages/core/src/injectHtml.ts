@@ -1,13 +1,14 @@
 import type { ResolvedConfig, Plugin, TransformResult } from 'vite'
-import type { InjectOptions, Pages } from './types'
+import type { InjectOptions, PageOption, Pages } from './types'
 import { render } from 'ejs'
 import path from 'path'
 import dotenv from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
 import fs, { promises as fsp } from 'fs'
 import process from 'process'
+const defaultPage = 'index.html'
 
-export function injectHtml(options: InjectOptions = {}): Plugin {
+export function injectHtml(pages: Pages): Plugin {
   let config: ResolvedConfig
   let env: Record<string, any> = {}
 
@@ -19,7 +20,6 @@ export function injectHtml(options: InjectOptions = {}): Plugin {
       env = loadEnv(config.mode, config.root, '')
     },
     configureServer(server) {
-      const indexPage = 'index.html'
       const queryRE = /\?.*$/s
       const hashRE = /#.*$/s
       const cleanUrl = (url: string): string => url.replace(hashRE, '').replace(queryRE, '')
@@ -30,10 +30,11 @@ export function injectHtml(options: InjectOptions = {}): Plugin {
           return next()
         }
 
-        const htmlName = url === '/' ? indexPage : url.replace('/', '')
-        const { pages = [] } = options
+        const htmlName = url === '/' ? defaultPage : url.replace('/', '')
         try {
-          let html = await getHtmlInPages(htmlName, pages)
+          const page = getPageConfig(htmlName, pages)
+          const { options = {} } = page
+          let html = await getHtmlInPages(htmlName, page)
           html = await generateHtml(html, { options, config, env })
           html = await server.transformIndexHtml(url, html as string, req.originalUrl)
           res.end(html)
@@ -42,22 +43,12 @@ export function injectHtml(options: InjectOptions = {}): Plugin {
         }
       })
     },
-    transformIndexHtml: {
-      enforce: 'pre',
-      transform(html: string, ctx) {
-        const { tags = [] } = options
-        console.log(ctx.filename, '===========')
-        return {
-          html: '',
-          tags: tags,
-        }
-      },
-    },
     transform(code, id): Promise<TransformResult> | TransformResult {
       if (config.command === 'build' && id.endsWith('.html')) {
-        const htmlName = id.match('[^/]+(?!.*/)')?.[0]
-        const { pages = [] } = options
-        return getHtmlInPages(htmlName as string, pages).then((code) => {
+        const htmlName = id.match('[^/]+(?!.*/)')?.[0] ?? defaultPage
+        const page = getPageConfig(htmlName, pages)
+        const { options = {} } = page
+        return getHtmlInPages(htmlName as string, page).then((code) => {
           return generateHtml(code, { options, config, env }).then((res) => {
             return {
               code: res,
@@ -73,16 +64,19 @@ export function injectHtml(options: InjectOptions = {}): Plugin {
     },
   }
 }
-
-function getHtmlInPages(htmlName: string, pages: Pages) {
-  const htmlPath = getHtmlPath(htmlName, pages)
+function getPageConfig(htmlName: string, pages: Pages): PageOption {
+  const defaultPageOption: PageOption = {
+    fileName: defaultPage,
+    template: `./${defaultPage}`,
+  }
+  const page = pages.filter((page) => page.fileName === htmlName)[0]
+  return page ?? defaultPageOption
+}
+function getHtmlInPages(htmlName: string, page: PageOption) {
+  const htmlPath = getHtmlPath(htmlName, page)
   return readHtml(htmlPath)
 }
-function getHtmlPath(htmlName: string, pages: Pages) {
-  const page = pages.filter((page) => page.fileName === htmlName)[0]
-  if (!page) {
-    throw new Error(`${htmlName} page is not exist in pages`)
-  }
+function getHtmlPath(htmlName: string, page: PageOption) {
   const { template } = page
   const templatePath = template.startsWith('.') ? template : `./${template}`
   const pagePath = path.resolve(process.cwd(), templatePath)
@@ -90,7 +84,7 @@ function getHtmlPath(htmlName: string, pages: Pages) {
 }
 async function readHtml(path: string) {
   if (!fs.existsSync(path)) {
-    throw new Error('html is not exist')
+    throw new Error(`html is not exist in ${path}`)
   }
   return await fsp.readFile(path).then((buffer) => buffer.toString())
 }
@@ -107,7 +101,7 @@ async function generateHtml(
     ...(env || {}),
     ...(data || injectData),
   }
-  return await render(html, ejsData, ejsOptions || injectOptions)
+  return render(html, ejsData, ejsOptions || injectOptions)
 }
 
 export function loadEnv(mode: string, envDir: string, prefix = ''): Record<string, string> {

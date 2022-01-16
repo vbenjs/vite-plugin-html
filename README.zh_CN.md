@@ -48,12 +48,16 @@ export default defineConfig({
   plugins: [
     vue(),
     minifyHtml(),
-    injectHtml({
-      data: {
-        title: 'vite-plugin-html-example',
-        injectScript: '<script src="./inject.js"></script>',
+    injectHtml([
+      {
+        fileName: 'index.html',
+        template: './index.html',
+        options: {
+          title: 'vite-plugin-html-example',
+          injectScript: '<script src="./inject.js"></script>',
+        },
       },
-    }),
+    ]),
   ],
 })
 ```
@@ -70,12 +74,16 @@ export default defineConfig({
   plugins: [
     vue(),
     html({
-      inject: {
-        data: {
-          title: 'vite-plugin-html-example',
-          injectScript: '<script src="./inject.js"></script>',
+      pages: [
+        {
+          fileName: 'index.html',
+          template: './index.html',
+          options: {
+            title: 'vite-plugin-html-example',
+            injectScript: '<script src="./inject.js"></script>',
+          },
         },
-      },
+      ],
       minify: true,
     }),
   ],
@@ -86,17 +94,24 @@ export default defineConfig({
 
 默认会向 index.html 注入 `.env` 文件的内容，类似 vite 的 `loadEnv`函数
 
-`injectHtml(InjectOptions)`
+`injectHtml(Pages: PageOption[])`
 
-### InjectOptions
+### PageOption
 
-| 参数       | 类型                  | 默认值 | 说明                                                                                                                         |
-| ---------- | --------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| data       | `Record<string, any>` | -      | 注入的数据                                                                                                                   |
-| ejsOptions | `EJSOptions`          | -      | ejs 配置项[EJSOptions](https://github.com/mde/ejs#options)                                                                   |
-| tags       | `HtmlTagDescriptor`   | -      | 标记描述符对象（{ tag, attrs, children }）的数组，以插入到现有的 HTML 中。每个标签还可以指定将其注入的位置（默认为`<head>`） |
+| Parameter | Types           | Default | Description       |
+| --------- | --------------- | ------- | ----------------- | --- |
+| fileName  | `string`        | -       | HTML 写入的文件名 |     |
+| template  | `string`        | -       | 模板的相对路径    |
+| options   | `InjectOptions` | -       | 注入 HTML 的数据  |
 
-`data` 可以`index.html`中使用`ejs`模版语法获取
+### options
+
+| 参数       | 类型                  | 默认值 | 说明                                                       |
+| ---------- | --------------------- | ------ | ---------------------------------------------------------- |
+| data       | `Record<string, any>` | -      | 注入的数据                                                 |
+| ejsOptions | `EJSOptions`          | -      | ejs 配置项[EJSOptions](https://github.com/mde/ejs#options) |
+
+`data` 可以在 `html` 中使用 `ejs` 模版语法获取
 
 ## minifyHtml 参数说明
 

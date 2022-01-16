@@ -10,8 +10,8 @@ const minifyFn = minify
 export { injectHtml, minifyHtml, minifyFn }
 
 export default (options: Options = {}): Plugin[] => {
-  const { inject = {}, minify = {} } = options
-  return [injectHtml(inject), minifyHtml(minify)]
+  const { minify = {}, pages = [] } = options
+  return [injectHtml(pages), minifyHtml(minify)]
 }
 
 export type { MinifyOptions }

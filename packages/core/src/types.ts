@@ -1,6 +1,5 @@
 import type { Options as EJSOptions } from 'ejs'
 import type { Options as MinifyOptions } from 'html-minifier-terser'
-import type { HtmlTagDescriptor } from 'vite'
 
 export interface InjectOptions {
   /**
@@ -24,25 +23,20 @@ export interface InjectOptions {
    * @description esj options configuration
    */
   ejsOptions?: EJSOptions
-
-  /**
-   * @description vite transform tags
-   */
-  tags?: HtmlTagDescriptor[]
-  pages?: Pages
 }
 
 export interface PageOption {
   fileName: string
   template: string
+  options?: InjectOptions
 }
 export type Pages = PageOption[]
 
 export interface Options {
   /**
-   * @description Injection options
+   * @description Page options
    */
-  inject?: InjectOptions
+  pages?: Pages
 
   /**
    * @description Minimize options

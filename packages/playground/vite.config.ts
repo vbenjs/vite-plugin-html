@@ -16,22 +16,28 @@ export default defineConfig({
     vue(),
     html({
       minify: false,
-      inject: {
-        data: {
-          title: 'vite-plugin-html-demo',
-          injectScript: `<script src="./inject.js"></script>`,
+      pages: [
+        {
+          fileName: 'index.html',
+          template: 'index.html',
+          options: {
+            data: {
+              title: 'index',
+              injectScript: `<script src="./inject.js"></script>`,
+            },
+          },
         },
-        pages: [
-          {
-            fileName: 'index.html',
-            template: 'index.html',
+        {
+          fileName: 'other.html',
+          template: 'other.html',
+          options: {
+            data: {
+              title: 'other page',
+              injectScript: `<script src="./inject.js"></script>`,
+            },
           },
-          {
-            fileName: 'other.html',
-            template: 'other.html',
-          },
-        ],
-      },
+        },
+      ],
     }),
   ],
 })
