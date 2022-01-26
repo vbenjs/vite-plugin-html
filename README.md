@@ -48,12 +48,16 @@ export default defineConfig({
   plugins: [
     vue(),
     minifyHtml(),
-    injectHtml({
-      data: {
-        title: 'vite-plugin-html-example',
-        injectScript: '<script src="./inject.js"></script>',
+    injectHtml([
+      {
+        fileName: 'index.html',
+        template: './index.html',
+        options: {
+          title: 'vite-plugin-html-example',
+          injectScript: '<script src="./inject.js"></script>',
+        },
       },
-    }),
+    ]),
   ],
 })
 ```
@@ -70,12 +74,16 @@ export default defineConfig({
   plugins: [
     vue(),
     html({
-      inject: {
-        data: {
-          title: 'vite-plugin-html-example',
-          injectScript: '<script src="./inject.js"></script>',
+      pages: [
+        {
+          fileName: 'index.html',
+          template: './index.html',
+          options: {
+            title: 'vite-plugin-html-example',
+            injectScript: '<script src="./inject.js"></script>',
+          },
         },
-      },
+      ],
       minify: true,
     }),
   ],
@@ -86,15 +94,22 @@ export default defineConfig({
 
 The content of the `.env` file will be injected into index.html by default, similar to the `loadEnv` function of vite
 
-`injectHtml(InjectOptions)`
+`injectHtml(Pages: PageOption[])`
 
-### InjectOptions
+### PageOption
 
-| Parameter  | Types                 | Default | Description                                                                                                                                                                                  |
-| ---------- | --------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| data       | `Record<string, any>` | -       | Injected data                                                                                                                                                                                |
-| ejsOptions | `EJSOptions`          | -       | ejs configuration items[EJSOptions](https://github.com/mde/ejs#options)                                                                                                                      |
-| tags       | `HtmlTagDescriptor`   | -       | An array of tag descriptor objects ({ tag, attrs, children }) to inject to the existing HTML. Each tag can also specify where it should be injected to (default is prepending to `<head>`)） |
+| Parameter | Types           | Default | Description                    |
+| --------- | --------------- | ------- | ------------------------------ | --- |
+| fileName  | `string`        | -       | the file to write the HTML to. |     |
+| template  | `string`        | -       | relative path to the template. |
+| options   | `InjectOptions` | -       | inject to the HTML             |
+
+### options
+
+| Parameter  | Types                 | Default | Description                                                             |
+| ---------- | --------------------- | ------- | ----------------------------------------------------------------------- |
+| data       | `Record<string, any>` | -       | Injected data                                                           |
+| ejsOptions | `EJSOptions`          | -       | ejs configuration items[EJSOptions](https://github.com/mde/ejs#options) |
 
 `data` can be obtained using the `ejs` template syntax in `index.html`
 
