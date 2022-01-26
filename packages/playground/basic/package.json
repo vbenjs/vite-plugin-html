@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-html-demo",
+  "name": "playground-basic",
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",

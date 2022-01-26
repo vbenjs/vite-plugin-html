@@ -1,0 +1,17 @@
+{
+  "name": "playground-multiple-page",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "vite-plugin-html": "workspace:*",
+    "vue": "^3.2.29"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.1.0",
+    "@vue/compiler-sfc": "^3.2.29",
+    "vite": "^2.7.13"
+  }
+}

@@ -68,3 +68,9 @@ export function lookupFile(
     return lookupFile(parentDir, formats, pathOnly)
   }
 }
+
+export function cleanUrl(url: string): string {
+  const queryRE = /\?.*$/s
+  const hashRE = /#.*$/s
+  return url.replace(hashRE, '').replace(queryRE, '')
+}

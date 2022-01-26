@@ -4,26 +4,22 @@ import { render } from 'ejs'
 import { resolve } from 'pathe'
 import { existsSync, readFile } from 'fs-extra'
 import process from 'process'
-import { loadEnv } from './utils'
+import { cleanUrl, loadEnv } from './utils'
 
 const defaultPage = 'index.html'
 
-export function injectHtml(pages: Pages): Plugin {
-  let config: ResolvedConfig
+export function createInjectHtmlPlugin(pages: Pages): Plugin {
+  let viteConfig: ResolvedConfig
   let env: Record<string, any> = {}
 
   return {
     name: 'vite:inject-html',
     enforce: 'pre',
     configResolved(resolvedConfig) {
-      config = resolvedConfig
-      env = loadEnv(config.mode, config.root, '')
+      viteConfig = resolvedConfig
+      env = loadEnv(viteConfig.mode, viteConfig.root, '')
     },
     configureServer(server) {
-      const queryRE = /\?.*$/s
-      const hashRE = /#.*$/s
-      const cleanUrl = (url: string): string =>
-        url.replace(hashRE, '').replace(queryRE, '')
       server.middlewares.use(async (req, res, next) => {
         const url = cleanUrl(req.url || '')
 
@@ -36,7 +32,7 @@ export function injectHtml(pages: Pages): Plugin {
           const page = getPageConfig(htmlName, pages)
           const { options = {} } = page
           let html = await getHtmlInPages(htmlName, page)
-          html = await generateHtml(html, { options, config, env })
+          html = await generateHtml(html, { options, viteConfig, env })
           html = await server.transformIndexHtml(
             url,
             html as string,
@@ -49,17 +45,19 @@ export function injectHtml(pages: Pages): Plugin {
       })
     },
     transform(code, id): Promise<TransformResult> | TransformResult {
-      if (config.command === 'build' && id.endsWith('.html')) {
+      if (viteConfig.command === 'build' && id.endsWith('.html')) {
         const htmlName = id.match('[^/]+(?!.*/)')?.[0] ?? defaultPage
         const page = getPageConfig(htmlName, pages)
         const { options = {} } = page
         return getHtmlInPages(htmlName as string, page).then((code) => {
-          return generateHtml(code, { options, config, env }).then((res) => {
-            return {
-              code: res,
-              map: null,
-            }
-          })
+          return generateHtml(code, { options, viteConfig, env }).then(
+            (res) => {
+              return {
+                code: res,
+                map: null,
+              }
+            },
+          )
         })
       }
       return {
@@ -102,11 +100,11 @@ async function generateHtml(
   html: string,
   config: {
     options: InjectOptions
-    config: ResolvedConfig
+    viteConfig: ResolvedConfig
     env: Record<string, any>
   },
 ) {
-  const { options, config: viteConfig, env } = config
+  const { options, viteConfig, env } = config
   const { data, ejsOptions } = options
 
   const ejsData: Record<string, any> = {
