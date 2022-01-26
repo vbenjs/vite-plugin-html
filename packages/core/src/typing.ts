@@ -1,6 +1,8 @@
 import type { Options as EJSOptions } from 'ejs'
 import type { Options as MinifyOptions } from 'html-minifier-terser'
 
+type Entry = string | Record<string, string>
+
 export interface InjectOptions {
   /**
    *  @description Data injected into the html template
@@ -16,12 +18,12 @@ export interface InjectOptions {
 export interface PageOption {
   filename: string
   template: string
-  options?: InjectOptions
+  injectOptions?: InjectOptions
 }
 
 export type Pages = PageOption[]
 
-export interface Options {
+export interface UserOptions {
   /**
    * @description Page options
    */
@@ -31,4 +33,14 @@ export interface Options {
    * @description Minimize options
    */
   minify?: MinifyOptions | boolean
+
+  /**
+   * @alias input
+   */
+  entry?: Entry
+
+  /**
+   * @description inject options
+   */
+  inject?: InjectOptions
 }

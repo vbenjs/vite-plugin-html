@@ -1,14 +1,15 @@
 import type { Plugin } from 'vite'
-import type { Options } from './typing'
-import { createInjectHtmlPlugin } from './injectHtml'
+import type { UserOptions } from './typing'
+import { createInjectPlugin } from './injectHtml'
 import { createMinifyHtmlPlugin } from './minifyHtml'
 import { Options as MinifyOptions } from 'html-minifier-terser'
+import consola from 'consola'
 
-export { createInjectHtmlPlugin, createMinifyHtmlPlugin }
+consola.wrapConsole()
 
-export function createHtmlPlugin(options: Options = {}): Plugin[] {
-  const { minify = {}, pages = [] } = options
-  return [createInjectHtmlPlugin(pages), createMinifyHtmlPlugin(minify)]
+export function createHtmlPlugin(userOptions: UserOptions = {}): Plugin[] {
+  const { minify = {} } = userOptions
+  return [createInjectPlugin(userOptions), createMinifyHtmlPlugin(minify)]
 }
 
 export type { MinifyOptions }

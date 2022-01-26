@@ -1,9 +1,7 @@
 import type { Plugin } from 'vite'
-import {
-  minify as minifyFn,
-  Options as MinifyOptions,
-} from 'html-minifier-terser'
-import { createFilter } from '@rollup/pluginutils'
+import type { Options as MinifyOptions } from 'html-minifier-terser'
+import { minify as minifyFn } from 'html-minifier-terser'
+import { htmlFilter } from './utils/createHtmlFilter'
 
 function getOptions(minify: boolean): MinifyOptions {
   return {
@@ -38,18 +36,16 @@ export async function minifyHtml(
 export function createMinifyHtmlPlugin(
   minifyOptions: MinifyOptions | boolean = true,
 ): Plugin {
-  const filter = createFilter(['**/*.html'])
-
   return {
     name: 'vite:minify-html',
     apply: 'build',
     enforce: 'post',
-    async generateBundle(_options, outBundle) {
+    async generateBundle(_, outBundle) {
       if (minifyOptions) {
         for (const bundle of Object.values(outBundle)) {
           if (
             bundle.type === 'asset' &&
-            filter(bundle.fileName) &&
+            htmlFilter(bundle.fileName) &&
             typeof bundle.source === 'string'
           ) {
             bundle.source = await minifyHtml(bundle.source, minifyOptions)

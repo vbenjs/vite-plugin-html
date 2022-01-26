@@ -20,7 +20,7 @@ export default defineConfig({
         {
           filename: 'index.html',
           template: 'index.html',
-          options: {
+          injectOptions: {
             data: {
               title: 'index',
               injectScript: `<script src="./inject.js"></script>`,
@@ -30,7 +30,7 @@ export default defineConfig({
         {
           filename: 'other.html',
           template: 'other.html',
-          options: {
+          injectOptions: {
             data: {
               title: 'other page',
               injectScript: `<script src="./inject.js"></script>`,

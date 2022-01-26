@@ -8,9 +8,9 @@
   </head>
 
   <body>
-    <div id="app">
-      <img src="/logo.png" class="app-loading-logo" alt="Logo" />
-    </div>
+    <div><%- ENV %></div>
+    <div><%- NODE_ENV %></div>
+    <div id="app"></div>
     <div>other page</div>
     <%- injectScript %>
     <script type="module" src="/src/main.ts"></script>
