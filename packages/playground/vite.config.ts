@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-import html from '../core/dist/index.js'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
   build: {
@@ -14,11 +14,11 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    html({
-      minify: false,
+    createHtmlPlugin({
+      minify: true,
       pages: [
         {
-          fileName: 'index.html',
+          filename: 'index.html',
           template: 'index.html',
           options: {
             data: {
@@ -28,7 +28,7 @@ export default defineConfig({
           },
         },
         {
-          fileName: 'other.html',
+          filename: 'other.html',
           template: 'other.html',
           options: {
             data: {

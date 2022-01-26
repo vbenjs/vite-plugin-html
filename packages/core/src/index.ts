@@ -1,17 +1,14 @@
 import type { Plugin } from 'vite'
-import type { Options } from './types'
-
+import type { Options } from './typing'
 import { injectHtml } from './injectHtml'
-import { minifyHtml } from './minifyHtml'
-import { minify, Options as MinifyOptions } from 'html-minifier-terser'
+import { createMinifyHtmlPlugin } from './minifyHtml'
+import { Options as MinifyOptions } from 'html-minifier-terser'
 
-const minifyFn = minify
+export { injectHtml, createMinifyHtmlPlugin }
 
-export { injectHtml, minifyHtml, minifyFn }
-
-export default (options: Options = {}): Plugin[] => {
+export function createHtmlPlugin(options: Options = {}): Plugin[] {
   const { minify = {}, pages = [] } = options
-  return [injectHtml(pages), minifyHtml(minify)]
+  return [injectHtml(pages), createMinifyHtmlPlugin(minify)]
 }
 
 export type { MinifyOptions }

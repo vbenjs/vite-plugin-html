@@ -1,39 +1,58 @@
 import type { Plugin } from 'vite'
-import { minify, Options as MinifyOptions } from 'html-minifier-terser'
+import {
+  minify as minifyFn,
+  Options as MinifyOptions,
+} from 'html-minifier-terser'
 import { createFilter } from '@rollup/pluginutils'
 
-function getOptions(minify: boolean) {
+function getOptions(minify: boolean): MinifyOptions {
   return {
-    collapseBooleanAttributes: minify,
     collapseWhitespace: minify,
-    minifyCSS: minify,
-    minifyURLs: minify,
-    removeAttributeQuotes: minify,
-    removeComments: minify,
-    removeEmptyAttributes: minify,
-    html5: minify,
     keepClosingSlash: minify,
+    removeComments: minify,
     removeRedundantAttributes: minify,
     removeScriptTypeAttributes: minify,
     removeStyleLinkTypeAttributes: minify,
     useShortDoctype: minify,
+    minifyCSS: minify,
   }
 }
-export function minifyHtml(minifyOptions: MinifyOptions | boolean = true): Plugin {
+
+export async function minifyHtml(
+  html: string,
+  minify: boolean | MinifyOptions,
+) {
+  if (typeof minify === 'boolean' && !minify) {
+    return html
+  }
+
+  let minifyOptions: boolean | MinifyOptions = minify
+
+  if (typeof minify === 'boolean' && minify) {
+    minifyOptions = getOptions(minify)
+  }
+
+  return await minifyFn(html, minifyOptions as MinifyOptions)
+}
+
+export function createMinifyHtmlPlugin(
+  minifyOptions: MinifyOptions | boolean = true,
+): Plugin {
   const filter = createFilter(['**/*.html'])
-  const options =
-    typeof minifyOptions === 'boolean'
-      ? getOptions(minifyOptions)
-      : Object.assign(getOptions(true), minifyOptions)
+
   return {
     name: 'vite:minify-html',
-    // apply: 'build',
+    apply: 'build',
     enforce: 'post',
     async generateBundle(_options, outBundle) {
-      if (options) {
+      if (minifyOptions) {
         for (const bundle of Object.values(outBundle)) {
-          if (bundle.type === 'asset' && filter(bundle.fileName)) {
-            bundle.source = await minify(bundle.source as string, options)
+          if (
+            bundle.type === 'asset' &&
+            filter(bundle.fileName) &&
+            typeof bundle.source === 'string'
+          ) {
+            bundle.source = await minifyHtml(bundle.source, minifyOptions)
           }
         }
       }
