@@ -1,8 +1,7 @@
 import { expand } from 'dotenv-expand'
 import dotenv from 'dotenv'
 import { join, dirname } from 'pathe'
-import fsExtra from 'fs-extra'
-const { pathExistsSync, readFileSync, statSync, readdir } = fsExtra
+import fse from 'fs-extra'
 
 export function loadEnv(
   mode: string,
@@ -27,7 +26,7 @@ export function loadEnv(
   for (const file of envFiles) {
     const path = lookupFile(envDir, [file], true)
     if (path) {
-      const parsed = dotenv.parse(readFileSync(path), {
+      const parsed = dotenv.parse(fse.readFileSync(path), {
         debug: !!process.env.DEBUG || undefined,
       })
 
@@ -60,8 +59,8 @@ export function lookupFile(
 ): string | undefined {
   for (const format of formats) {
     const fullPath = join(dir, format)
-    if (pathExistsSync(fullPath) && statSync(fullPath).isFile()) {
-      return pathOnly ? fullPath : readFileSync(fullPath, 'utf-8')
+    if (fse.pathExistsSync(fullPath) && fse.statSync(fullPath).isFile()) {
+      return pathOnly ? fullPath : fse.readFileSync(fullPath, 'utf-8')
     }
   }
   const parentDir = dirname(dir)
@@ -77,7 +76,7 @@ export function cleanUrl(url: string): string {
 }
 
 export async function isDirEmpty(dir: string) {
-  return readdir(dir).then((files) => {
+  return fse.readdir(dir).then((files) => {
     return files.length === 0
   })
 }

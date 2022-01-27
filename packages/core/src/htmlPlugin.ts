@@ -1,12 +1,11 @@
-import { ResolvedConfig, Plugin, TransformResult, normalizePath } from 'vite'
+import type { ResolvedConfig, Plugin, TransformResult } from 'vite'
 import type { InjectOptions, PageOption, Pages, UserOptions } from './typing'
 import { render } from 'ejs'
 import { cleanUrl, isDirEmpty, loadEnv } from './utils'
 import { htmlFilter } from './utils/createHtmlFilter'
-import { mergeConfig } from 'vite'
+import { mergeConfig, normalizePath } from 'vite'
 import { parse } from 'node-html-parser'
-import fsExtra from 'fs-extra'
-const { pathExistsSync, readFile, move, remove } = fsExtra
+import fse from 'fs-extra'
 import { resolve, dirname, basename } from 'pathe'
 import fg from 'fast-glob'
 import consola from 'consola'
@@ -115,7 +114,7 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
 
       await Promise.all(
         htmlFiles.map((file) =>
-          move(file, resolve(cwd, basename(file)), { overwrite: true }),
+          fse.move(file, resolve(cwd, basename(file)), { overwrite: true }),
         ),
       )
 
@@ -127,7 +126,7 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
         htmlDirs.map(async (item) => {
           const isEmpty = await isDirEmpty(item)
           if (isEmpty) {
-            return remove(item)
+            return fse.remove(item)
           }
         }),
       )
@@ -271,8 +270,8 @@ export function getHtmlPath(page: PageOption, root: string) {
 }
 
 export async function readHtml(path: string) {
-  if (!pathExistsSync(path)) {
+  if (!fse.pathExistsSync(path)) {
     throw new Error(`html is not exist in ${path}`)
   }
-  return await readFile(path).then((buffer) => buffer.toString())
+  return await fse.readFile(path).then((buffer) => buffer.toString())
 }
