@@ -135,7 +135,7 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
 }
 
 export function createInput(
-  { pages = [], template = '' }: UserOptions,
+  { pages = [], template = DEFAULT_TEMPLATE }: UserOptions,
   viteConfig: ResolvedConfig,
 ) {
   const input: Record<string, string> = {}
@@ -194,7 +194,7 @@ export async function renderHtml(
 }
 
 export function getPage(
-  { pages = [], entry, template = '', inject = {} }: UserOptions,
+  { pages = [], entry, template = DEFAULT_TEMPLATE, inject = {} }: UserOptions,
   name: string,
   viteConfig: ResolvedConfig,
 ) {
