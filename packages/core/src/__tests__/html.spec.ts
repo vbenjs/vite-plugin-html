@@ -1,19 +1,15 @@
-import {
-  createInjectHtmlPlugin,
-  createSpaPage,
-  renderHtml,
-} from '../htmlPlugin'
+import { createPlugin, createSpaPage, renderHtml } from '../htmlPlugin'
 import { describe, test, expect } from 'vitest'
 
-const createPlugin = () => {
-  const { name } = createInjectHtmlPlugin({ inject: {} })
+const createVitePlugin = () => {
+  const { name } = createPlugin()
   return { name }
 }
 
-describe('inject html plugin test.', () => {
+describe('html plugin test.', () => {
   test('make sure name.', async () => {
-    const { name } = await createPlugin()
-    expect(name).toEqual('vite:inject-html')
+    const { name } = await createVitePlugin()
+    expect(name).toEqual('vite:html')
   })
 })
 

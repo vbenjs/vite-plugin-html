@@ -16,7 +16,7 @@ const ignoreDirs = ['.', '', '/']
 
 const bodyInjectRE = /<\/body>/
 
-export function createPlugin(userOptions: UserOptions): Plugin {
+export function createPlugin(userOptions: UserOptions = {}): Plugin {
   const { entry, template = DEFAULT_TEMPLATE, pages = [] } = userOptions
   let { preserveEntrySignatures } = userOptions
 
