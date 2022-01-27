@@ -63,7 +63,6 @@ importers:
       '@types/fs-extra': ^9.0.13
       '@types/html-minifier-terser': ^6.1.0
       '@types/node': ^17.0.12
-      '@types/rollup': ^0.54.0
       chalk: ^5.0.0
       consola: ^2.15.3
       dotenv: ^14.3.2
@@ -74,7 +73,6 @@ importers:
       html-minifier-terser: ^6.1.0
       node-html-parser: ^5.2.0
       pathe: ^0.2.0
-      rollup: ^2.66.1
       typescript: ^4.5.5
       vite: ^2.7.13
     dependencies:
@@ -94,8 +92,6 @@ importers:
       '@types/fs-extra': 9.0.13
       '@types/html-minifier-terser': 6.1.0
       '@types/node': 17.0.12
-      '@types/rollup': 0.54.0
-      rollup: 2.66.1
       typescript: 4.5.5
       vite: 2.7.13
 
@@ -714,16 +710,6 @@ packages:
       }
     dependencies:
       '@types/node': 17.0.12
-    dev: true
-
-  /@types/rollup/0.54.0:
-    resolution:
-      {
-        integrity: sha512-oeYztLHhQ98jnr+u2cs1c3tHOGtpzrm9DJlIdEjznwoXWidUbrI+X6ib7zCkPIbB7eJ7VbbKNQ5n/bPnSg6Naw==,
-      }
-    deprecated: This is a stub types definition for rollup (https://github.com/rollup/rollup). rollup provides its own type definitions, so you don't need @types/rollup installed!
-    dependencies:
-      rollup: 2.66.1
     dev: true
 
   /@types/tough-cookie/4.0.1:

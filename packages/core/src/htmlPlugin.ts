@@ -18,14 +18,9 @@ const bodyInjectRE = /<\/body>/
 
 export function createPlugin(userOptions: UserOptions = {}): Plugin {
   const { entry, template = DEFAULT_TEMPLATE, pages = [] } = userOptions
-  let { preserveEntrySignatures } = userOptions
 
   let viteConfig: ResolvedConfig
   let env: Record<string, any> = {}
-
-  if (preserveEntrySignatures === true) {
-    preserveEntrySignatures = 'exports-only'
-  }
 
   return {
     name: 'vite:html',
@@ -38,7 +33,6 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
       return mergeConfig(conf, {
         build: {
           rollupOptions: {
-            preserveEntrySignatures: preserveEntrySignatures ?? false,
             input: createInput(userOptions, conf as unknown as ResolvedConfig),
           },
         },
