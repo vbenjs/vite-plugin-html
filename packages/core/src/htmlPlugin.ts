@@ -5,7 +5,8 @@ import { cleanUrl, isDirEmpty, loadEnv } from './utils'
 import { htmlFilter } from './utils/createHtmlFilter'
 import { mergeConfig } from 'vite'
 import { parse } from 'node-html-parser'
-import { existsSync, readFile, move, remove } from 'fs-extra'
+import fsExtra from 'fs-extra'
+const { pathExistsSync, readFile, move, remove } = fsExtra
 import { resolve, dirname, basename } from 'pathe'
 import fg from 'fast-glob'
 import consola from 'consola'
@@ -270,7 +271,7 @@ export function getHtmlPath(page: PageOption, root: string) {
 }
 
 export async function readHtml(path: string) {
-  if (!existsSync(path)) {
+  if (!pathExistsSync(path)) {
     throw new Error(`html is not exist in ${path}`)
   }
   return await readFile(path).then((buffer) => buffer.toString())

@@ -1,7 +1,8 @@
 import { expand } from 'dotenv-expand'
 import dotenv from 'dotenv'
 import { join, dirname } from 'pathe'
-import { existsSync, readFileSync, statSync, readdir } from 'fs-extra'
+import fsExtra from 'fs-extra'
+const { pathExistsSync, readFileSync, statSync, readdir } = fsExtra
 
 export function loadEnv(
   mode: string,
@@ -59,7 +60,7 @@ export function lookupFile(
 ): string | undefined {
   for (const format of formats) {
     const fullPath = join(dir, format)
-    if (existsSync(fullPath) && statSync(fullPath).isFile()) {
+    if (pathExistsSync(fullPath) && statSync(fullPath).isFile()) {
       return pathOnly ? fullPath : readFileSync(fullPath, 'utf-8')
     }
   }
