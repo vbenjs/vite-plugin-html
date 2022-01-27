@@ -35,8 +35,6 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
       env = loadEnv(viteConfig.mode, viteConfig.root, '')
     },
     config(conf) {
-      console.log(createInput(userOptions, conf as unknown as ResolvedConfig))
-
       return mergeConfig(conf, {
         build: {
           rollupOptions: {
