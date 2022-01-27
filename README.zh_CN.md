@@ -126,8 +126,8 @@ export default defineConfig({
 ### UserOptions
 
 | 参数     | 类型                     | 默认值        | 说明             |
-| -------- | ------------------------ | ------------- | ---------------- | --- |
-| entry    | `string`                 | `src/main.ts` | 入口文件         |     |
+| -------- | ------------------------ | ------------- | ---------------- |
+| entry    | `string`                 | `src/main.ts` | 入口文件         |
 | template | `string`                 | `index.html`  | 模板的相对路径   |
 | inject   | `InjectOptions`          | -             | 注入 HTML 的数据 |
 | minify   | `boolean｜MinifyOptions` | -             | 是否压缩 html    |
@@ -149,10 +149,10 @@ export default defineConfig({
 ### PageOption
 
 | 参数          | 类型            | 默认值        | 说明             |
-| ------------- | --------------- | ------------- | ---------------- | --- |
-| filename      | `string`        | -             | html 文件名      |     |
+| ------------- | --------------- | ------------- | ---------------- |
+| filename      | `string`        | -             | html 文件名      |
 | template      | `string`        | `index.html`  | 模板的相对路径   |
-| entry         | `string`        | `src/main.ts` | 入口文件         |     |
+| entry         | `string`        | `src/main.ts` | 入口文件         |
 | injectOptions | `InjectOptions` | -             | 注入 HTML 的数据 |
 
 ### MinifyOptions

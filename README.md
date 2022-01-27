@@ -124,8 +124,8 @@ export default defineConfig({
 ### UserOptions
 
 | Parameter | Types                    | Default       | Description                   |
-| --------- | ------------------------ | ------------- | ----------------------------- | --- |
-| entry     | `string`                 | `src/main.ts` | entry file path               |     |
+| --------- | ------------------------ | ------------- | ----------------------------- |
+| entry     | `string`                 | `src/main.ts` | entry file path               |
 | template  | `string`                 | `index.html`  | relative path to the template |
 | inject    | `InjectOptions`          | -             | Data injected into HTML       |
 | minify    | `boolean｜MinifyOptions` | -             | whether to compress html      |
@@ -147,10 +147,10 @@ By default, the contents of the `.env` file will be injected into index.html, si
 ### PageOption
 
 | Parameter     | Types           | Default       | Description                   |
-| ------------- | --------------- | ------------- | ----------------------------- | --- |
-| filename      | `string`        | -             | html file name                |     |
+| ------------- | --------------- | ------------- | ----------------------------- |
+| filename      | `string`        | -             | html file name                |
 | template      | `string`        | `index.html`  | relative path to the template |
-| entry         | `string`        | `src/main.ts` | entry file path               |     |
+| entry         | `string`        | `src/main.ts` | entry file path               |
 | injectOptions | `InjectOptions` | -             | Data injected into HTML       |
 
 ### MinifyOptions
