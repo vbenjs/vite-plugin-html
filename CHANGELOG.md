@@ -1,3 +1,15 @@
+## [3.0.1](https://github.com/vbenjs/vite-plugin-html/compare/v3.0.0...v3.0.1) (2022-01-27)
+
+### Bug Fixes
+
+- make sure template defaults are correct ([697626c](https://github.com/vbenjs/vite-plugin-html/commit/697626cb62db42c1853788ac4019a834822b19e5))
+
+# [3.0.0-beta.1](https://github.com/vbenjs/vite-plugin-html/compare/v3.0.0...v3.0.0-beta.1) (2022-01-27)
+
+### Bug Fixes
+
+- make sure template defaults are correct ([697626c](https://github.com/vbenjs/vite-plugin-html/commit/697626cb62db42c1853788ac4019a834822b19e5))
+
 ## [2.1.2](https://github.com/vbenjs/vite-plugin-html/compare/v2.0.6...v2.1.2) (2021-12-27)
 
 ### Bug Fixes
