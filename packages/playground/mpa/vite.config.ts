@@ -1,25 +1,17 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import path from 'path'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
-  build: {
-    rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, 'index.html'),
-        other: path.resolve(__dirname, 'other.html'),
-      },
-    },
-  },
   plugins: [
     vue(),
     createHtmlPlugin({
       minify: true,
       pages: [
         {
+          entry: 'src/main.ts',
           filename: 'index.html',
-          template: 'index.html',
+          template: 'public/index.html',
           injectOptions: {
             data: {
               title: 'index',
@@ -28,8 +20,9 @@ export default defineConfig({
           },
         },
         {
+          entry: 'src/other-main.ts',
           filename: 'other.html',
-          template: 'other.html',
+          template: 'public/other.html',
           injectOptions: {
             data: {
               title: 'other page',

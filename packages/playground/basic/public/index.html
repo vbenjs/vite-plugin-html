@@ -8,7 +8,9 @@
   </head>
 
   <body>
+    <div><%- ENV %></div>
+    <div><%- NODE_ENV %></div>
     <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <%- injectScript %>
   </body>
 </html>

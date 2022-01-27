@@ -1,5 +1,5 @@
 {
-  "name": "playground-map-inject",
+  "name": "playground-map",
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",

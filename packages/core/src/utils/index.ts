@@ -1,7 +1,7 @@
 import { expand } from 'dotenv-expand'
 import dotenv from 'dotenv'
 import { join, dirname } from 'pathe'
-import { existsSync, readFileSync, statSync } from 'fs-extra'
+import { existsSync, readFileSync, statSync, readdir } from 'fs-extra'
 
 export function loadEnv(
   mode: string,
@@ -73,4 +73,10 @@ export function cleanUrl(url: string): string {
   const queryRE = /\?.*$/s
   const hashRE = /#.*$/s
   return url.replace(hashRE, '').replace(queryRE, '')
+}
+
+export async function isDirEmpty(dir: string) {
+  return readdir(dir).then((files) => {
+    return files.length === 0
+  })
 }

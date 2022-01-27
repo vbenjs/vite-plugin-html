@@ -1,7 +1,8 @@
 import type { Options as EJSOptions } from 'ejs'
 import type { Options as MinifyOptions } from 'html-minifier-terser'
+import type { PreserveEntrySignaturesOption } from 'rollup'
 
-type Entry = string | Record<string, string>
+export type Entry = string | Record<string, string>
 
 export interface InjectOptions {
   /**
@@ -18,6 +19,7 @@ export interface InjectOptions {
 export interface PageOption {
   filename: string
   template: string
+  entry?: string
   injectOptions?: InjectOptions
 }
 
@@ -35,12 +37,24 @@ export interface UserOptions {
   minify?: MinifyOptions | boolean
 
   /**
-   * @alias input
+   * page entry
    */
-  entry?: Entry
+  entry?: string
+
+  /**
+   * template path
+   */
+  template?: string
 
   /**
    * @description inject options
    */
   inject?: InjectOptions
+
+  /**
+   * Enable to preserve entry singatures.
+   * @see https://rollupjs.org/guide/en/#preserveentrysignatures
+   * @default false
+   */
+  preserveEntrySignatures?: PreserveEntrySignaturesOption | boolean
 }
