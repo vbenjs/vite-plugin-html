@@ -22,14 +22,6 @@
     "url": "https://github.com/vbenjs/vite-plugin-html/issues"
   },
   "homepage": "https://github.com/vbenjs/vite-plugin-html/tree/master/#readme",
-  "dependencies": {
-    "ejs": "^3.1.6",
-    "fs-extra": "^10.0.0",
-    "html-minifier-terser": "^6.1.0"
-  },
-  "peerDependencies": {
-    "vite": ">=2.0.0"
-  },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^16.0.0",
