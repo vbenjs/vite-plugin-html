@@ -9,7 +9,7 @@ import { existsSync, readFile, move, remove } from 'fs-extra'
 import { resolve, dirname, basename } from 'pathe'
 import fg from 'fast-glob'
 import consola from 'consola'
-import chalk from 'chalk'
+import { dim } from 'colorette'
 
 const DEFAULT_TEMPLATE = 'index.html'
 const ignoreDirs = ['.', '', '/']
@@ -225,7 +225,7 @@ export function removeEntryScript(html: string) {
     item.parentNode.removeChild(item)
   })
   removedNode.length &&
-    consola.warn(`vite-plugin-html: Since you have already configured entry, ${chalk.dim(
+    consola.warn(`vite-plugin-html: Since you have already configured entry, ${dim(
       removedNode.toString(),
     )} is deleted. You may also delete it from the index.html.
         `)
