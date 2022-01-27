@@ -2,9 +2,13 @@
 
 **English** | [中文](./README.zh_CN.md)
 
-[![npm][npm-img]][npm-url] [![node][node-img]][node-url]
+## Features
 
-A Vite plugin for index.html that provides minify and EJS template-based functionality.
+- HTML compression capability
+- EJS template capability
+- Multi-page application support
+- Support custom `entry`
+- Support custom `template`
 
 ## Install (yarn or npm)
 
@@ -16,7 +20,7 @@ A Vite plugin for index.html that provides minify and EJS template-based functio
 yarn add vite-plugin-html -D
 ```
 
-or
+或
 
 ```bash
 npm i vite-plugin-html -D
@@ -24,7 +28,7 @@ npm i vite-plugin-html -D
 
 ## Usage
 
-- Update your index.html to add some EJS tag
+- Add EJS tags to `index.html`, e.g.
 
 ```html
 <head>
@@ -36,122 +40,152 @@ npm i vite-plugin-html -D
 </head>
 ```
 
-- Config plugin in vite.config.ts. In this way, the required functions can be introduced as needed
+- Configure in `vite.config.ts`, this method can introduce the required functions as needed
 
 ```ts
 import { defineConfig, Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-import { minifyHtml, injectHtml } from 'vite-plugin-html'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
   plugins: [
     vue(),
-    minifyHtml(),
-    injectHtml([
-      {
-        fileName: 'index.html',
-        template: './index.html',
-        options: {
-          title: 'vite-plugin-html-example',
-          injectScript: '<script src="./inject.js"></script>',
+    createHtmlPlugin({
+      minify: true,
+      /**
+       * After writing entry here, you will not need to add script tags in `index.html`, the original tags need to be deleted
+       * @default src/main.ts
+       */
+      entry: 'src/main.ts',
+      /**
+       * If you want to store `index.html` in the specified folder, you can modify it, otherwise no configuration is required
+       * @default index.html
+       */
+      template: 'public/index.html',
+
+      /**
+       * Data that needs to be injected into the index.html ejs template
+       */
+      inject: {
+        data: {
+          title: 'index',
+          injectScript: `<script src="./inject.js"></script>`,
         },
       },
-    ]),
-  ],
-})
-```
-
-- If you don’t want to separate, you can directly Import it as a whole
-
-```ts
-import { defineConfig, Plugin } from 'vite'
-import vue from '@vitejs/plugin-vue'
-
-import html from 'vite-plugin-html'
-
-export default defineConfig({
-  plugins: [
-    vue(),
-    html({
-      pages: [
-        {
-          fileName: 'index.html',
-          template: './index.html',
-          options: {
-            title: 'vite-plugin-html-example',
-            injectScript: '<script src="./inject.js"></script>',
-          },
-        },
-      ],
-      minify: true,
     }),
   ],
 })
 ```
 
-## injectHtml Parameter Description
+Multi-page application configuration
 
-The content of the `.env` file will be injected into index.html by default, similar to the `loadEnv` function of vite
+```ts
+import { defineConfig } from 'vite'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
-`injectHtml(Pages: PageOption[])`
+export default defineConfig({
+  plugins: [
+    createHtmlPlugin({
+      minify: true,
+      pages: [
+        {
+          entry: 'src/main.ts',
+          filename: 'index.html',
+          template: 'public/index.html',
+          injectOptions: {
+            data: {
+              title: 'index',
+              injectScript: `<script src="./inject.js"></script>`,
+            },
+          },
+        },
+        {
+          entry: 'src/other-main.ts',
+          filename: 'other.html',
+          template: 'public/other.html',
+          injectOptions: {
+            data: {
+              title: 'other page',
+              injectScript: `<script src="./inject.js"></script>`,
+            },
+          },
+        },
+      ],
+    }),
+  ],
+})
+```
+
+## Parameter Description
+
+`createHtmlPlugin(options: UserOptions)`
+
+### UserOptions
+
+| Parameter | Types                    | Default       | Description                   |
+| --------- | ------------------------ | ------------- | ----------------------------- | --- |
+| entry     | `string`                 | `src/main.ts` | entry file path               |     |
+| template  | `string`                 | `index.html`  | relative path to the template |
+| inject    | `InjectOptions`          | -             | Data injected into HTML       |
+| minify    | `boolean｜MinifyOptions` | -             | whether to compress html      |
+| pages     | `PageOption`             | -             | Multi-page configuration      |
+
+### InjectOptions
+
+| Parameter  | Types                 | Default | Description                                                               |
+| ---------- | --------------------- | ------- | ------------------------------------------------------------------------- |
+| data       | `Record<string, any>` | -       | injected data                                                             |
+| ejsOptions | `EJSOptions`          | -       | ejs configuration Options[EJSOptions](https://github.com/mde/ejs#options) |
+
+`data` can be accessed in `html` using the `ejs` template syntax
+
+#### Env inject
+
+By default, the contents of the `.env` file will be injected into index.html, similar to vite's `loadEnv` function
 
 ### PageOption
 
-| Parameter | Types           | Default | Description                    |
-| --------- | --------------- | ------- | ------------------------------ | --- |
-| fileName  | `string`        | -       | the file to write the HTML to. |     |
-| template  | `string`        | -       | relative path to the template. |
-| options   | `InjectOptions` | -       | inject to the HTML             |
-
-### options
-
-| Parameter  | Types                 | Default | Description                                                             |
-| ---------- | --------------------- | ------- | ----------------------------------------------------------------------- |
-| data       | `Record<string, any>` | -       | Injected data                                                           |
-| ejsOptions | `EJSOptions`          | -       | ejs configuration items[EJSOptions](https://github.com/mde/ejs#options) |
-
-`data` can be obtained using the `ejs` template syntax in `index.html`
-
-## minifyHtml Parameter Description
-
-`minifyHtml(MinifyOptions | boolean)`: Default`true`
+| Parameter     | Types           | Default       | Description                   |
+| ------------- | --------------- | ------------- | ----------------------------- | --- |
+| filename      | `string`        | -             | html file name                |     |
+| template      | `string`        | `index.html`  | relative path to the template |
+| entry         | `string`        | `src/main.ts` | entry file path               |     |
+| injectOptions | `InjectOptions` | -             | Data injected into HTML       |
 
 ### MinifyOptions
 
 Default compression configuration
 
 ```ts
-    collapseBooleanAttributes: true,
     collapseWhitespace: true,
-    minifyCSS: true,
-    minifyJS: true,
-    minifyURLs: true,
-    removeAttributeQuotes: true,
-    removeComments: true,
-    removeEmptyAttributes: true,
-    html5: true,
     keepClosingSlash: true,
+    removeComments: true,
     removeRedundantAttributes: true,
     removeScriptTypeAttributes: true,
     removeStyleLinkTypeAttributes: true,
     useShortDoctype: true,
+    minifyCSS: true,
 ```
 
-## Example
-
-### Run Example
+### Run the playground
 
 ```bash
-yarn
+pnpm install
 
-cd ./packages/playground
+# spa
+cd ./packages/playground/basic
 
-yarn dev
+pnpm run dev
+
+# map
+cd ./packages/playground/mpa
+
+pnpm run dev
 
 ```
 
-## Sample project
+## Example project
 
 [Vben Admin](https://github.com/anncwb/vue-vben-admin)
 

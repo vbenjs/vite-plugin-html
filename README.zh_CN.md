@@ -4,7 +4,13 @@
 
 [![npm][npm-img]][npm-url] [![node][node-img]][node-url]
 
-一个针对 index.html，提供压缩和基于 ejs 模板功能的 vite 插件。
+## 功能
+
+- HTML 压缩能力
+- EJS 模版能力
+- 多页应用支持
+- 支持自定义`entry`
+- 支持自定义`template`
 
 ## 安装 (yarn or npm)
 
@@ -42,69 +48,92 @@ npm i vite-plugin-html -D
 import { defineConfig, Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-import { minifyHtml, injectHtml } from 'vite-plugin-html'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
   plugins: [
     vue(),
-    minifyHtml(),
-    injectHtml([
-      {
-        fileName: 'index.html',
-        template: './index.html',
-        options: {
-          title: 'vite-plugin-html-example',
-          injectScript: '<script src="./inject.js"></script>',
+    createHtmlPlugin({
+      minify: true,
+      /**
+       * 在这里写entry后，你将不需要在`index.html`内添加 script 标签，原有标签需要删除
+       * @default src/main.ts
+       */
+      entry: 'src/main.ts',
+      /**
+       * 如果你想将 `index.html`存放在指定文件夹，可以修改它，否则不需要配置
+       * @default index.html
+       */
+      template: 'public/index.html',
+
+      /**
+       * 需要注入 index.html ejs 模版的数据
+       */
+      inject: {
+        data: {
+          title: 'index',
+          injectScript: `<script src="./inject.js"></script>`,
         },
       },
-    ]),
-  ],
-})
-```
-
-- 如果不想分开，则可以直接整体引入
-
-```ts
-import { defineConfig, Plugin } from 'vite'
-import vue from '@vitejs/plugin-vue'
-
-import html from 'vite-plugin-html'
-
-export default defineConfig({
-  plugins: [
-    vue(),
-    html({
-      pages: [
-        {
-          fileName: 'index.html',
-          template: './index.html',
-          options: {
-            title: 'vite-plugin-html-example',
-            injectScript: '<script src="./inject.js"></script>',
-          },
-        },
-      ],
-      minify: true,
     }),
   ],
 })
 ```
 
-## injectHtml 参数说明
+多页应用配置
 
-默认会向 index.html 注入 `.env` 文件的内容，类似 vite 的 `loadEnv`函数
+```ts
+import { defineConfig } from 'vite'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
-`injectHtml(Pages: PageOption[])`
+export default defineConfig({
+  plugins: [
+    createHtmlPlugin({
+      minify: true,
+      pages: [
+        {
+          entry: 'src/main.ts',
+          filename: 'index.html',
+          template: 'public/index.html',
+          injectOptions: {
+            data: {
+              title: 'index',
+              injectScript: `<script src="./inject.js"></script>`,
+            },
+          },
+        },
+        {
+          entry: 'src/other-main.ts',
+          filename: 'other.html',
+          template: 'public/other.html',
+          injectOptions: {
+            data: {
+              title: 'other page',
+              injectScript: `<script src="./inject.js"></script>`,
+            },
+          },
+        },
+      ],
+    }),
+  ],
+})
+```
 
-### PageOption
+## 参数说明
 
-| Parameter | Types           | Default | Description       |
-| --------- | --------------- | ------- | ----------------- | --- |
-| fileName  | `string`        | -       | HTML 写入的文件名 |     |
-| template  | `string`        | -       | 模板的相对路径    |
-| options   | `InjectOptions` | -       | 注入 HTML 的数据  |
+`createHtmlPlugin(options: UserOptions)`
 
-### options
+### UserOptions
+
+| 参数     | 类型                     | 默认值        | 说明             |
+| -------- | ------------------------ | ------------- | ---------------- | --- |
+| entry    | `string`                 | `src/main.ts` | 入口文件         |     |
+| template | `string`                 | `index.html`  | 模板的相对路径   |
+| inject   | `InjectOptions`          | -             | 注入 HTML 的数据 |
+| minify   | `boolean｜MinifyOptions` | -             | 是否压缩 html    |
+| pages    | `PageOption`             | -             | 多页配置         |
+
+### InjectOptions
 
 | 参数       | 类型                  | 默认值 | 说明                                                       |
 | ---------- | --------------------- | ------ | ---------------------------------------------------------- |
@@ -113,41 +142,48 @@ export default defineConfig({
 
 `data` 可以在 `html` 中使用 `ejs` 模版语法获取
 
-## minifyHtml 参数说明
+#### env 注入
 
-`minifyHtml(MinifyOptions | boolean)`:默认为`true`
+默认会向 index.html 注入 `.env` 文件的内容，类似 vite 的 `loadEnv`函数
+
+### PageOption
+
+| 参数          | 类型            | 默认值        | 说明             |
+| ------------- | --------------- | ------------- | ---------------- | --- |
+| filename      | `string`        | -             | html 文件名      |     |
+| template      | `string`        | `index.html`  | 模板的相对路径   |
+| entry         | `string`        | `src/main.ts` | 入口文件         |     |
+| injectOptions | `InjectOptions` | -             | 注入 HTML 的数据 |
 
 ### MinifyOptions
 
 默认压缩配置
 
 ```ts
-    collapseBooleanAttributes: true,
     collapseWhitespace: true,
-    minifyCSS: true,
-    minifyJS: true,
-    minifyURLs: true,
-    removeAttributeQuotes: true,
-    removeComments: true,
-    removeEmptyAttributes: true,
-    html5: true,
     keepClosingSlash: true,
+    removeComments: true,
     removeRedundantAttributes: true,
     removeScriptTypeAttributes: true,
     removeStyleLinkTypeAttributes: true,
     useShortDoctype: true,
+    minifyCSS: true,
 ```
-
-## 示例
 
 ### 运行示例
 
 ```bash
-yarn
+pnpm install
 
-cd ./packages/playground
+# spa
+cd ./packages/playground/basic
 
-yarn dev
+pnpm run dev
+
+# map
+cd ./packages/playground/mpa
+
+pnpm run dev
 
 ```
 
