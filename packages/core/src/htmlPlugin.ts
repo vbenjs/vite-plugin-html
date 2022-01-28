@@ -42,12 +42,16 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         const url = cleanUrl(req.url || '')
-
-        if (!htmlFilter(url) && url !== '/') {
+        const base = viteConfig.base
+        const excludeBaseUrl = url.replace(base, '/')
+        if (!htmlFilter(url) && excludeBaseUrl !== '/') {
           return next()
         }
+
         try {
-          const htmlName = url === '/' ? DEFAULT_TEMPLATE : url.replace('/', '')
+          const htmlName =
+            excludeBaseUrl === '/' ? DEFAULT_TEMPLATE : url.replace('/', '')
+
           const page = getPage(userOptions, htmlName, viteConfig)
           const { injectOptions = {} } = page
           let html = await getHtmlInPages(page, viteConfig.root)
