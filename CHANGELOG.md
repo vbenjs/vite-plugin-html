@@ -1,3 +1,12 @@
+## [3.0.4](https://github.com/vbenjs/vite-plugin-html/compare/v3.0.0...v3.0.4) (2022-02-07)
+
+### Bug Fixes
+
+- fix base configuration causing local development errors ([6deeead](https://github.com/vbenjs/vite-plugin-html/commit/6deeead53f02007effd42b013d0eb03390f0a9a2))
+- fs-extra no longer exports existsSync ([#25](https://github.com/vbenjs/vite-plugin-html/issues/25)) ([d6614da](https://github.com/vbenjs/vite-plugin-html/commit/d6614dae2ab5d2f53d54ec480e1212613819186b))
+- history mode support ([4b0a54f](https://github.com/vbenjs/vite-plugin-html/commit/4b0a54fd08dd3e065b239ef0587dc683263db343))
+- make sure template defaults are correct ([697626c](https://github.com/vbenjs/vite-plugin-html/commit/697626cb62db42c1853788ac4019a834822b19e5))
+
 ## [3.0.2](https://github.com/vbenjs/vite-plugin-html/compare/v3.0.0...v3.0.2) (2022-01-28)
 
 ### Bug Fixes
