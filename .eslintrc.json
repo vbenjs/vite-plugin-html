@@ -16,7 +16,6 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"],
   "rules": {
     "no-console": 1,
     "@typescript-eslint/no-non-null-assertion": "off",

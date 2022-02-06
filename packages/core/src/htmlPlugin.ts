@@ -10,6 +10,7 @@ import { resolve, dirname, basename } from 'pathe'
 import fg from 'fast-glob'
 import consola from 'consola'
 import { dim } from 'colorette'
+import history from 'connect-history-api-fallback'
 
 const DEFAULT_TEMPLATE = 'index.html'
 const ignoreDirs = ['.', '', '/']
@@ -40,10 +41,17 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
     },
 
     configureServer(server) {
+      server.middlewares.use(
+        history({
+          disableDotRule: undefined,
+          htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'],
+        }),
+      )
       server.middlewares.use(async (req, res, next) => {
         const url = cleanUrl(req.url || '')
         const base = viteConfig.base
         const excludeBaseUrl = url.replace(base, '/')
+
         if (!htmlFilter(url) && excludeBaseUrl !== '/') {
           return next()
         }
@@ -95,7 +103,7 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
       }
     },
     async closeBundle() {
-      const outputDirs = []
+      const outputDirs: string[] = []
 
       if (isMpa(viteConfig) || pages.length) {
         for (const page of pages) {

@@ -10,7 +10,8 @@
     "outDir": "dist",
     "lib": ["ESNext"],
     "sourceMap": false,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "noImplicitAny": false
   },
   "include": ["./packages"],
   "exclude": ["**/dist", "**/node_modules", "**/test"]

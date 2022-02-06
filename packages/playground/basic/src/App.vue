@@ -1,3 +1,6 @@
 <template>
-  <div>hello world</div>
+  <div>
+    hello world
+    <router-view></router-view>
+  </div>
 </template>
