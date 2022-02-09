@@ -25,7 +25,7 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
 
   return {
     name: 'vite:html',
-    // enforce: 'pre',
+    enforce: 'pre',
     configResolved(resolvedConfig) {
       viteConfig = resolvedConfig
       env = loadEnv(viteConfig.mode, viteConfig.root, '')
