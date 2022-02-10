@@ -1,4 +1,4 @@
-import type { Plugin } from 'vite'
+import type { PluginOption } from 'vite'
 import type { UserOptions } from './typing'
 import type { Options as MinifyOptions } from 'html-minifier-terser'
 import { minify as minifyFn } from 'html-minifier-terser'
@@ -36,7 +36,7 @@ export async function minifyHtml(
 
 export function createMinifyHtmlPlugin({
   minify = true,
-}: UserOptions = {}): Plugin {
+}: UserOptions = {}): PluginOption {
   return {
     name: 'vite:minify-html',
     // apply: 'build',

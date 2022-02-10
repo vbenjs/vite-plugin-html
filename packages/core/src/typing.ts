@@ -49,4 +49,10 @@ export interface UserOptions {
    * @description inject options
    */
   inject?: InjectOptions
+
+  /**
+   * output warning log
+   * @default false
+   */
+  verbose?: boolean
 }

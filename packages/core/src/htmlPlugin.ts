@@ -1,4 +1,4 @@
-import type { ResolvedConfig, Plugin, TransformResult } from 'vite'
+import type { ResolvedConfig, PluginOption, TransformResult } from 'vite'
 import type { InjectOptions, PageOption, Pages, UserOptions } from './typing'
 import { render } from 'ejs'
 import { cleanUrl, isDirEmpty, loadEnv } from './utils'
@@ -17,8 +17,13 @@ const ignoreDirs = ['.', '', '/']
 
 const bodyInjectRE = /<\/body>/
 
-export function createPlugin(userOptions: UserOptions = {}): Plugin {
-  const { entry, template = DEFAULT_TEMPLATE, pages = [] } = userOptions
+export function createPlugin(userOptions: UserOptions = {}): PluginOption {
+  const {
+    entry,
+    template = DEFAULT_TEMPLATE,
+    pages = [],
+    verbose = false,
+  } = userOptions
 
   let viteConfig: ResolvedConfig
   let env: Record<string, any> = {}
@@ -31,13 +36,16 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
       env = loadEnv(viteConfig.mode, viteConfig.root, '')
     },
     config(conf) {
-      return mergeConfig(conf, {
-        build: {
-          rollupOptions: {
-            input: createInput(userOptions, conf as unknown as ResolvedConfig),
+      const input = createInput(userOptions, conf as unknown as ResolvedConfig)
+      if (input) {
+        return {
+          build: {
+            rollupOptions: {
+              input,
+            },
           },
-        },
-      })
+        }
+      }
     },
 
     configureServer(server) {
@@ -68,6 +76,7 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
             viteConfig,
             env,
             entry: page.entry || entry,
+            verbose,
           })
           html = await server.transformIndexHtml?.(url, html, req.originalUrl)
           res.end(html)
@@ -88,6 +97,7 @@ export function createPlugin(userOptions: UserOptions = {}): Plugin {
             viteConfig,
             env,
             entry: page.entry || entry,
+            verbose,
           }).then((resultHtml) => {
             return {
               code: resultHtml,
@@ -180,9 +190,10 @@ export async function renderHtml(
     viteConfig: ResolvedConfig
     env: Record<string, any>
     entry?: string
+    verbose?: boolean
   },
 ) {
-  const { injectOptions, viteConfig, env, entry } = config
+  const { injectOptions, viteConfig, env, entry, verbose } = config
   const { data, ejsOptions } = injectOptions
 
   const ejsData: Record<string, any> = {
@@ -194,7 +205,7 @@ export async function renderHtml(
   let result = await render(html, ejsData, ejsOptions)
 
   if (entry) {
-    result = removeEntryScript(result)
+    result = removeEntryScript(result, verbose)
     result = result.replace(
       bodyInjectRE,
       `<script type="module" src="${normalizePath(
@@ -224,7 +235,7 @@ function isMpa(viteConfig: ResolvedConfig) {
   return typeof input !== 'string' && Object.keys(input || {}).length > 1
 }
 
-export function removeEntryScript(html: string) {
+export function removeEntryScript(html: string, verbose = false) {
   if (!html) {
     return html
   }
@@ -236,7 +247,8 @@ export function removeEntryScript(html: string) {
     removedNode.push(item.toString())
     item.parentNode.removeChild(item)
   })
-  removedNode.length &&
+  verbose &&
+    removedNode.length &&
     consola.warn(`vite-plugin-html: Since you have already configured entry, ${dim(
       removedNode.toString(),
     )} is deleted. You may also delete it from the index.html.
