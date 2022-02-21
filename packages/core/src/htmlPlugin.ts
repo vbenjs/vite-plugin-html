@@ -3,10 +3,10 @@ import type { InjectOptions, PageOption, Pages, UserOptions } from './typing'
 import { render } from 'ejs'
 import { cleanUrl, isDirEmpty, loadEnv } from './utils'
 import { htmlFilter } from './utils/createHtmlFilter'
-import { mergeConfig, normalizePath } from 'vite'
+import { normalizePath } from 'vite'
 import { parse } from 'node-html-parser'
-import fse from 'fs-extra'
-import { resolve, dirname, basename } from 'pathe'
+import fs from 'fs-extra'
+import path from 'pathe'
 import fg from 'fast-glob'
 import consola from 'consola'
 import { dim } from 'colorette'
@@ -37,6 +37,7 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
     },
     config(conf) {
       const input = createInput(userOptions, conf as unknown as ResolvedConfig)
+
       if (input) {
         return {
           build: {
@@ -69,8 +70,10 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
             excludeBaseUrl === '/' ? DEFAULT_TEMPLATE : url.replace('/', '')
 
           const page = getPage(userOptions, htmlName, viteConfig)
+
           const { injectOptions = {} } = page
           let html = await getHtmlInPages(page, viteConfig.root)
+
           html = await renderHtml(html, {
             injectOptions,
             viteConfig,
@@ -78,7 +81,9 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
             entry: page.entry || entry,
             verbose,
           })
-          html = await server.transformIndexHtml?.(url, html, req.originalUrl)
+          if (server.transformIndexHtml) {
+            html = await server.transformIndexHtml(url, html, req.originalUrl)
+          }
           res.end(html)
         } catch (e) {
           consola.log(e)
@@ -87,9 +92,12 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
     },
     transform(code, id): Promise<TransformResult> | TransformResult {
       if (viteConfig.command === 'build' && htmlFilter(id)) {
-        const htmlName = id.match('[^/]+(?!.*/)')?.[0] ?? DEFAULT_TEMPLATE
+        const htmlName = id
+          .replace(path.join(process.cwd(), viteConfig.base), '/')
+          .replace(/\/public/, '')
 
         const page = getPage(userOptions, htmlName, viteConfig)
+
         const { injectOptions = {} } = page
         return getHtmlInPages(page, viteConfig.root).then((html) => {
           return renderHtml(html, {
@@ -117,38 +125,40 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
 
       if (isMpa(viteConfig) || pages.length) {
         for (const page of pages) {
-          const dir = dirname(page.template)
+          const dir = path.dirname(page.template)
           if (!ignoreDirs.includes(dir)) {
             outputDirs.push(dir)
           }
         }
       } else {
-        const dir = dirname(template)
+        const dir = path.dirname(template)
         if (!ignoreDirs.includes(dir)) {
           outputDirs.push(dir)
         }
       }
-      const cwd = resolve(viteConfig.root, viteConfig.build.outDir)
+      const cwd = path.resolve(viteConfig.root, viteConfig.build.outDir)
       const htmlFiles = await fg(
         outputDirs.map((dir) => `${dir}/*.html`),
-        { cwd: resolve(cwd), absolute: true },
+        { cwd: path.resolve(cwd), absolute: true },
       )
 
       await Promise.all(
         htmlFiles.map((file) =>
-          fse.move(file, resolve(cwd, basename(file)), { overwrite: true }),
+          fs.move(file, path.resolve(cwd, path.basename(file)), {
+            overwrite: true,
+          }),
         ),
       )
 
       const htmlDirs = await fg(
         outputDirs.map((dir) => dir),
-        { cwd: resolve(cwd), onlyDirectories: true, absolute: true },
+        { cwd: path.resolve(cwd), onlyDirectories: true, absolute: true },
       )
       await Promise.all(
         htmlDirs.map(async (item) => {
           const isEmpty = await isDirEmpty(item)
           if (isEmpty) {
-            return fse.remove(item)
+            return fs.remove(item)
           }
         }),
       )
@@ -164,20 +174,28 @@ export function createInput(
   if (isMpa(viteConfig) || pages?.length) {
     const templates = pages.map((page) => page.template)
     templates.forEach((temp) => {
-      const file = basename(temp)
-      const key = file.replace(/\.html/, '')
-      input[key] = resolve(viteConfig.root, temp)
+      let dirName = path.dirname(temp)
+      const file = path.basename(temp)
+
+      dirName = dirName.replace(/\s+/g, '').replace(/\//g, '-')
+
+      const key =
+        dirName === '.' || dirName === 'public' || !dirName
+          ? file.replace(/\.html/, '')
+          : dirName
+      input[key] = path.resolve(viteConfig.root, temp)
     })
+
     return input
   } else {
-    const dir = dirname(template)
+    const dir = path.dirname(template)
     if (ignoreDirs.includes(dir)) {
       return undefined
     } else {
-      const file = basename(template)
+      const file = path.basename(template)
       const key = file.replace(/\.html/, '')
       return {
-        [key]: resolve(viteConfig.root, template),
+        [key]: path.resolve(viteConfig.root, template),
       }
     }
   }
@@ -278,24 +296,28 @@ export function getPageConfig(
     filename: defaultPage,
     template: `./${defaultPage}`,
   }
-  const page = pages.filter((page) => page.filename === htmlName)?.[0]
+
+  const page = pages.filter((page) => {
+    return path.resolve('/' + page.filename) === path.resolve('/' + htmlName)
+  })?.[0]
   return page ?? defaultPageOption ?? undefined
 }
 
 export function getHtmlInPages(page: PageOption, root: string) {
   const htmlPath = getHtmlPath(page, root)
+
   return readHtml(htmlPath)
 }
 
 export function getHtmlPath(page: PageOption, root: string) {
   const { template } = page
   const templatePath = template.startsWith('.') ? template : `./${template}`
-  return resolve(root, templatePath)
+  return path.resolve(root, templatePath)
 }
 
 export async function readHtml(path: string) {
-  if (!fse.pathExistsSync(path)) {
+  if (!fs.pathExistsSync(path)) {
     throw new Error(`html is not exist in ${path}`)
   }
-  return await fse.readFile(path).then((buffer) => buffer.toString())
+  return await fs.readFile(path).then((buffer) => buffer.toString())
 }

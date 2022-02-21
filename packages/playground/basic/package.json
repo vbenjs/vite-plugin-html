@@ -7,12 +7,12 @@
   },
   "dependencies": {
     "vite-plugin-html": "workspace:*",
-    "vue": "^3.2.30",
+    "vue": "^3.2.31",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.0",
-    "@vue/compiler-sfc": "^3.2.30",
-    "vite": "^2.8.0"
+    "@vitejs/plugin-vue": "^2.2.2",
+    "@vue/compiler-sfc": "^3.2.31",
+    "vite": "^2.8.4"
   }
 }
