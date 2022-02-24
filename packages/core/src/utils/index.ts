@@ -26,9 +26,7 @@ export function loadEnv(
   for (const file of envFiles) {
     const path = lookupFile(envDir, [file], true)
     if (path) {
-      const parsed = dotenv.parse(fse.readFileSync(path), {
-        debug: !!process.env.DEBUG || undefined,
-      })
+      const parsed = dotenv.parse(fse.readFileSync(path))
 
       // let environment variables use each other
       expand({

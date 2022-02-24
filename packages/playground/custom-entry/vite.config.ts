@@ -7,18 +7,16 @@ export default defineConfig({
     vue(),
     createHtmlPlugin({
       minify: true,
+      entry: 'src/main.ts',
+      /**
+       * @default index.html
+       */
+      template: 'public/index.html',
       inject: {
         data: {
           title: 'index',
           injectScript: `<script src="./inject.js"></script>`,
         },
-        tags: [
-          {
-            tag: 'div',
-            attrs: { id: 'ddd' },
-            injectTo: 'body-prepend',
-          },
-        ],
       },
     }),
   ],

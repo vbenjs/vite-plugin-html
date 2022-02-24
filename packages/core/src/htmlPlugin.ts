@@ -60,27 +60,17 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
         const url = cleanUrl(req.url || '')
         const base = viteConfig.base
         const excludeBaseUrl = url.replace(base, '/')
-
         if (!htmlFilter(url) && excludeBaseUrl !== '/') {
           return next()
         }
-
         try {
           const htmlName =
             excludeBaseUrl === '/' ? DEFAULT_TEMPLATE : url.replace('/', '')
 
           const page = getPage(userOptions, htmlName, viteConfig)
 
-          const { injectOptions = {} } = page
           let html = await getHtmlInPages(page, viteConfig.root)
 
-          html = await renderHtml(html, {
-            injectOptions,
-            viteConfig,
-            env,
-            entry: page.entry || entry,
-            verbose,
-          })
           if (server.transformIndexHtml) {
             html = await server.transformIndexHtml(url, html, req.originalUrl)
           }
@@ -89,6 +79,30 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
           consola.log(e)
         }
       })
+    },
+
+    transformIndexHtml: {
+      enforce: 'pre',
+      async transform(html, ctx) {
+        const url = ctx.filename
+        const base = viteConfig.base
+        const excludeBaseUrl = url.replace(base, '/')
+        const htmlName = path.relative(process.cwd(), excludeBaseUrl)
+        const page = getPage(userOptions, htmlName, viteConfig)
+        const { injectOptions = {} } = page
+        const _html = await renderHtml(html, {
+          injectOptions,
+          viteConfig,
+          env,
+          entry: page.entry || entry,
+          verbose,
+        })
+        const { tags = [] } = injectOptions
+        return {
+          html: _html,
+          tags: tags,
+        }
+      },
     },
     transform(code, id): Promise<TransformResult> | TransformResult {
       if (viteConfig.command === 'build' && htmlFilter(id)) {

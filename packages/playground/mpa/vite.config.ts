@@ -17,6 +17,15 @@ export default defineConfig({
               title: 'index',
               injectScript: `<script src="./inject.js"></script>`,
             },
+            tags: [
+              {
+                injectTo: 'body-prepend',
+                tag: 'div',
+                attrs: {
+                  id: 'tag1',
+                },
+              },
+            ],
           },
         },
         {
@@ -28,6 +37,15 @@ export default defineConfig({
               title: 'other page',
               injectScript: `<script src="./inject.js"></script>`,
             },
+            tags: [
+              {
+                injectTo: 'body-prepend',
+                tag: 'div',
+                attrs: {
+                  id: 'tag2',
+                },
+              },
+            ],
           },
         },
       ],

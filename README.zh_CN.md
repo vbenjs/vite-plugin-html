@@ -74,6 +74,15 @@ export default defineConfig({
           title: 'index',
           injectScript: `<script src="./inject.js"></script>`,
         },
+        tags: [
+          {
+            injectTo: 'body-prepend',
+            tag: 'div',
+            attrs: {
+              id: 'tag',
+            },
+          },
+        ],
       },
     }),
   ],
@@ -100,6 +109,15 @@ export default defineConfig({
               title: 'index',
               injectScript: `<script src="./inject.js"></script>`,
             },
+            tags: [
+              {
+                injectTo: 'body-prepend',
+                tag: 'div',
+                attrs: {
+                  id: 'tag1',
+                },
+              },
+            ],
           },
         },
         {
@@ -111,6 +129,15 @@ export default defineConfig({
               title: 'other page',
               injectScript: `<script src="./inject.js"></script>`,
             },
+            tags: [
+              {
+                injectTo: 'body-prepend',
+                tag: 'div',
+                attrs: {
+                  id: 'tag2',
+                },
+              },
+            ],
           },
         },
       ],
@@ -139,6 +166,7 @@ export default defineConfig({
 | ---------- | --------------------- | ------ | ---------------------------------------------------------- |
 | data       | `Record<string, any>` | -      | 注入的数据                                                 |
 | ejsOptions | `EJSOptions`          | -      | ejs 配置项[EJSOptions](https://github.com/mde/ejs#options) |
+| tags       | `HtmlTagDescriptor`   | -      | 需要注入的标签列表                                         |
 
 `data` 可以在 `html` 中使用 `ejs` 模版语法获取
 
