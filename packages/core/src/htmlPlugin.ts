@@ -241,7 +241,7 @@ export async function renderHtml(
     result = result.replace(
       bodyInjectRE,
       `<script type="module" src="${normalizePath(
-        `/${entry}`,
+        `${entry}`,
       )}"></script>\n</body>`,
     )
   }
