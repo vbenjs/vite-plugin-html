@@ -57,7 +57,6 @@ importers:
       '@types/html-minifier-terser': ^6.1.0
       '@types/node': ^17.0.21
       colorette: ^2.0.16
-      connect-history-api-fallback: ^1.6.0
       consola: ^2.15.3
       dotenv: ^16.0.0
       dotenv-expand: ^8.0.1
@@ -72,7 +71,6 @@ importers:
     dependencies:
       '@rollup/pluginutils': 4.1.2
       colorette: 2.0.16
-      connect-history-api-fallback: 1.6.0
       consola: 2.15.3
       dotenv: 16.0.0
       dotenv-expand: 8.0.1
@@ -134,6 +132,23 @@ importers:
     dependencies:
       vite-plugin-html: link:../../core
       vue: 3.2.31
+    devDependencies:
+      '@vitejs/plugin-vue': 2.2.2_vite@2.8.4+vue@3.2.31
+      '@vue/compiler-sfc': 3.2.31
+      vite: 2.8.4
+
+  packages/playground/vite-proxy:
+    specifiers:
+      '@vitejs/plugin-vue': ^2.2.2
+      '@vue/compiler-sfc': ^3.2.31
+      vite: ^2.8.4
+      vite-plugin-html: workspace:*
+      vue: ^3.2.31
+      vue-router: ^4.0.12
+    dependencies:
+      vite-plugin-html: link:../../core
+      vue: 3.2.31
+      vue-router: 4.0.12_vue@3.2.31
     devDependencies:
       '@vitejs/plugin-vue': 2.2.2_vite@2.8.4+vue@3.2.31
       '@vue/compiler-sfc': 3.2.31
@@ -1582,14 +1597,6 @@ packages:
 
   /concat-map/0.0.1:
     resolution: { integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s= }
-
-  /connect-history-api-fallback/1.6.0:
-    resolution:
-      {
-        integrity: sha512-e54B99q/OUoH64zYYRf3HBP5z24G38h5D3qXu23JGRoigpX5Ss4r9ZnDk3g0Z8uQC2x2lPaJ+UlWBc1ZWBWdLg==,
-      }
-    engines: { node: '>=0.8' }
-    dev: false
 
   /consola/2.15.3:
     resolution:

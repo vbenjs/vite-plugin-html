@@ -1,7 +1,7 @@
 import type { ResolvedConfig, PluginOption, TransformResult } from 'vite'
 import type { InjectOptions, PageOption, Pages, UserOptions } from './typing'
 import { render } from 'ejs'
-import { cleanUrl, isDirEmpty, loadEnv } from './utils'
+import { isDirEmpty, loadEnv } from './utils'
 import { htmlFilter } from './utils/createHtmlFilter'
 import { normalizePath } from 'vite'
 import { parse } from 'node-html-parser'
@@ -10,7 +10,6 @@ import path from 'pathe'
 import fg from 'fast-glob'
 import consola from 'consola'
 import { dim } from 'colorette'
-import history from 'connect-history-api-fallback'
 
 const DEFAULT_TEMPLATE = 'index.html'
 const ignoreDirs = ['.', '', '/']
@@ -47,38 +46,6 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
           },
         }
       }
-    },
-
-    configureServer(server) {
-      server.middlewares.use(
-        history({
-          disableDotRule: undefined,
-          htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'],
-        }),
-      )
-      server.middlewares.use(async (req, res, next) => {
-        const url = cleanUrl(req.url || '')
-        const base = viteConfig.base
-        const excludeBaseUrl = url.replace(base, '/')
-        if (!htmlFilter(url) && excludeBaseUrl !== '/') {
-          return next()
-        }
-        try {
-          const htmlName =
-            excludeBaseUrl === '/' ? DEFAULT_TEMPLATE : url.replace('/', '')
-
-          const page = getPage(userOptions, htmlName, viteConfig)
-
-          let html = await getHtmlInPages(page, viteConfig.root)
-
-          if (server.transformIndexHtml) {
-            html = await server.transformIndexHtml(url, html, req.originalUrl)
-          }
-          res.end(html)
-        } catch (e) {
-          consola.log(e)
-        }
-      })
     },
 
     transformIndexHtml: {
