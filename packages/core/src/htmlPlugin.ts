@@ -1,8 +1,7 @@
-import type { ResolvedConfig, PluginOption, TransformResult } from 'vite'
+import type { ResolvedConfig, PluginOption } from 'vite'
 import type { InjectOptions, PageOption, Pages, UserOptions } from './typing'
 import { render } from 'ejs'
-import { cleanUrl, isDirEmpty, loadEnv } from './utils'
-import { htmlFilter } from './utils/createHtmlFilter'
+import { isDirEmpty, loadEnv } from './utils'
 import { normalizePath } from 'vite'
 import { parse } from 'node-html-parser'
 import fs from 'fs-extra'
@@ -50,35 +49,48 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
     },
 
     configureServer(server) {
+      let _pages: { filename: string; template: string }[] = []
+      const rewrites: { from: RegExp; to: any }[] = []
+      if (!isMpa(viteConfig)) {
+        const template = userOptions.template || DEFAULT_TEMPLATE
+        const filename = DEFAULT_TEMPLATE
+        _pages.push({
+          filename,
+          template,
+        })
+      } else {
+        _pages = pages.map((page) => {
+          return {
+            filename: page.filename || DEFAULT_TEMPLATE,
+            template: page.template || DEFAULT_TEMPLATE,
+          }
+        })
+      }
+      const proxy = viteConfig.server?.proxy ?? {}
+      const baseUrl = viteConfig.base ?? '/'
+      const keys = Object.keys(proxy)
+
+      let indexPage: any = null
+      for (const page of _pages) {
+        if (page.filename !== 'index.html') {
+          rewrites.push(createRewire(page.template, page, baseUrl, keys))
+        } else {
+          indexPage = page
+        }
+      }
+
+      // ensure order
+      if (indexPage) {
+        rewrites.push(createRewire('', indexPage, baseUrl, keys))
+      }
+
       server.middlewares.use(
         history({
           disableDotRule: undefined,
           htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'],
+          rewrites: rewrites,
         }),
       )
-      server.middlewares.use(async (req, res, next) => {
-        const url = cleanUrl(req.url || '')
-        const base = viteConfig.base
-        const excludeBaseUrl = url.replace(base, '/')
-        if (!htmlFilter(url) && excludeBaseUrl !== '/') {
-          return next()
-        }
-        try {
-          const htmlName =
-            excludeBaseUrl === '/' ? DEFAULT_TEMPLATE : url.replace('/', '')
-
-          const page = getPage(userOptions, htmlName, viteConfig)
-
-          let html = await getHtmlInPages(page, viteConfig.root)
-
-          if (server.transformIndexHtml) {
-            html = await server.transformIndexHtml(url, html, req.originalUrl)
-          }
-          res.end(html)
-        } catch (e) {
-          consola.log(e)
-        }
-      })
     },
 
     transformIndexHtml: {
@@ -88,6 +100,7 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
         const base = viteConfig.base
         const excludeBaseUrl = url.replace(base, '/')
         const htmlName = path.relative(process.cwd(), excludeBaseUrl)
+
         const page = getPage(userOptions, htmlName, viteConfig)
         const { injectOptions = {} } = page
         const _html = await renderHtml(html, {
@@ -103,36 +116,6 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
           tags: tags,
         }
       },
-    },
-    transform(code, id): Promise<TransformResult> | TransformResult {
-      if (viteConfig.command === 'build' && htmlFilter(id)) {
-        const htmlName = id
-          .replace(path.join(process.cwd(), viteConfig.base), '/')
-          .replace(/\/public/, '')
-
-        const page = getPage(userOptions, htmlName, viteConfig)
-
-        const { injectOptions = {} } = page
-        return getHtmlInPages(page, viteConfig.root).then((html) => {
-          return renderHtml(html, {
-            injectOptions,
-            viteConfig,
-            env,
-            entry: page.entry || entry,
-            verbose,
-          }).then((resultHtml) => {
-            return {
-              code: resultHtml,
-              map: null,
-            }
-          })
-        })
-      }
-
-      return {
-        code,
-        map: null,
-      }
     },
     async closeBundle() {
       const outputDirs: string[] = []
@@ -312,7 +295,7 @@ export function getPageConfig(
   }
 
   const page = pages.filter((page) => {
-    return path.resolve('/' + page.filename) === path.resolve('/' + htmlName)
+    return path.resolve('/' + page.template) === path.resolve('/' + htmlName)
   })?.[0]
   return page ?? defaultPageOption ?? undefined
 }
@@ -334,4 +317,30 @@ export async function readHtml(path: string) {
     throw new Error(`html is not exist in ${path}`)
   }
   return await fs.readFile(path).then((buffer) => buffer.toString())
+}
+
+function createRewire(
+  reg: string,
+  page: any,
+  baseUrl: string,
+  proxyUrlKeys: string[],
+) {
+  return {
+    from: new RegExp(`^/${reg}*`),
+    to({ parsedUrl }: any) {
+      const pathname: string = parsedUrl.pathname
+
+      const excludeBaseUrl = pathname.replace(baseUrl, '/')
+
+      const template = path.resolve(baseUrl, page.template)
+
+      if (excludeBaseUrl === '/') {
+        return template
+      }
+      const isApiUrl = proxyUrlKeys.some((item) =>
+        pathname.startsWith(path.resolve(baseUrl, item)),
+      )
+      return isApiUrl ? excludeBaseUrl : template
+    },
+  }
 }

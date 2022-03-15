@@ -3,6 +3,11 @@ import vue from '@vitejs/plugin-vue'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8080',
+    },
+  },
   plugins: [
     vue(),
     createHtmlPlugin({
@@ -11,7 +16,7 @@ export default defineConfig({
         {
           entry: 'src/main.ts',
           filename: 'index.html',
-          template: 'public/index.html',
+          template: 'index.html',
           injectOptions: {
             data: {
               title: 'index',
@@ -31,7 +36,7 @@ export default defineConfig({
         {
           entry: 'src/other-main.ts',
           filename: 'other.html',
-          template: 'public/other.html',
+          template: 'other.html',
           injectOptions: {
             data: {
               title: 'other page',

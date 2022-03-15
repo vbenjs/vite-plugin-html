@@ -3,6 +3,11 @@ import vue from '@vitejs/plugin-vue'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8080',
+    },
+  },
   plugins: [
     vue(),
     createHtmlPlugin({
@@ -11,7 +16,7 @@ export default defineConfig({
       /**
        * @default index.html
        */
-      template: 'public/index.html',
+      template: 'static/index.html',
       inject: {
         data: {
           title: 'index',

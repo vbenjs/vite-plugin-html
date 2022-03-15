@@ -67,12 +67,6 @@ export function lookupFile(
   }
 }
 
-export function cleanUrl(url: string): string {
-  const queryRE = /\?.*$/s
-  const hashRE = /#.*$/s
-  return url.replace(hashRE, '').replace(queryRE, '')
-}
-
 export async function isDirEmpty(dir: string) {
   return fse.readdir(dir).then((files) => {
     return files.length === 0

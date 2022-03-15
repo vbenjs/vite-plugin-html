@@ -3,6 +3,12 @@ import vue from '@vitejs/plugin-vue'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
 export default defineConfig({
+  // base: '/aaa/',
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8080',
+    },
+  },
   plugins: [
     vue(),
     createHtmlPlugin({

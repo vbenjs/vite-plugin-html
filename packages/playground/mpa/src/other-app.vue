@@ -1,3 +1,6 @@
 <template>
-  <div>hello world app1</div>
+  <div>
+    <div>hello world app</div>
+    <router-view></router-view>
+  </div>
 </template>

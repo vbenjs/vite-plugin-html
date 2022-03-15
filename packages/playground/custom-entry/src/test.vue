@@ -1,1 +1,1 @@
-<template>test</template>
+<template>test-custom-entry</template>

@@ -8,11 +8,11 @@
   "dependencies": {
     "vite-plugin-html": "workspace:*",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.2",
+    "@vitejs/plugin-vue": "^2.2.4",
     "@vue/compiler-sfc": "^3.2.31",
-    "vite": "^2.8.4"
+    "vite": "^2.8.6"
   }
 }
