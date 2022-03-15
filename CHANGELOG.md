@@ -1,3 +1,13 @@
+# [3.2.0](https://github.com/vbenjs/vite-plugin-html/compare/v3.0.6...v3.2.0) (2022-03-15)
+
+### Bug Fixes
+
+- improve middleware logic ([36e143a](https://github.com/vbenjs/vite-plugin-html/commit/36e143a55b62710c7435ed0ca5ed4b035930c3af))
+
+### Features
+
+- support tags ([d07c9db](https://github.com/vbenjs/vite-plugin-html/commit/d07c9db4541432b94576e1fd4dce1b17098a60d0))
+
 ## [3.0.6](https://github.com/vbenjs/vite-plugin-html/compare/v3.0.0...v3.0.6) (2022-02-10)
 
 ### Bug Fixes
