@@ -16,7 +16,7 @@ export default defineConfig({
         {
           entry: 'src/main.ts',
           filename: 'index.html',
-          template: 'index.html',
+          template: 'src/index.html',
           injectOptions: {
             data: {
               title: 'index',
@@ -36,7 +36,7 @@ export default defineConfig({
         {
           entry: 'src/other-main.ts',
           filename: 'other.html',
-          template: 'other.html',
+          template: 'src/other.html',
           injectOptions: {
             data: {
               title: 'other page',

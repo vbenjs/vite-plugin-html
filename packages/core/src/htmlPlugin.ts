@@ -73,7 +73,14 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
       let indexPage: any = null
       for (const page of _pages) {
         if (page.filename !== 'index.html') {
-          rewrites.push(createRewire(page.template, page, baseUrl, keys))
+          rewrites.push(
+            createRewire(
+              page.filename.replace(/\.html$/, ''),
+              page,
+              baseUrl,
+              keys,
+            ),
+          )
         } else {
           indexPage = page
         }
@@ -107,7 +114,7 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
           injectOptions,
           viteConfig,
           env,
-          entry: page.entry || entry,
+          entry: page.entry ? path.relative(page.filename, page.entry) : entry,
           verbose,
         })
         const { tags = [] } = injectOptions
@@ -169,16 +176,16 @@ export function createInput(
 ) {
   const input: Record<string, string> = {}
   if (isMpa(viteConfig) || pages?.length) {
-    const templates = pages.map((page) => page.template)
-    templates.forEach((temp) => {
-      let dirName = path.dirname(temp)
-      const file = path.basename(temp)
+    pages.forEach((page) => {
+      const { filename, template: temp } = page
+      let dirName = path.dirname(filename)
+      const file = path.basename(filename)
 
       dirName = dirName.replace(/\s+/g, '').replace(/\//g, '-')
 
       const key =
         dirName === '.' || dirName === 'public' || !dirName
-          ? file.replace(/\.html/, '')
+          ? file.replace(/\.html$/, '')
           : dirName
       input[key] = path.resolve(viteConfig.root, temp)
     })
@@ -190,7 +197,7 @@ export function createInput(
       return undefined
     } else {
       const file = path.basename(template)
-      const key = file.replace(/\.html/, '')
+      const key = file.replace(/\.html$/, '')
       return {
         [key]: path.resolve(viteConfig.root, template),
       }
@@ -326,7 +333,7 @@ function createRewire(
   proxyUrlKeys: string[],
 ) {
   return {
-    from: new RegExp(`^/${reg}*`),
+    from: new RegExp(`^/${reg}(\\.html)?$`),
     to({ parsedUrl }: any) {
       const pathname: string = parsedUrl.pathname
 
