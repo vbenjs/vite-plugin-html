@@ -72,9 +72,8 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
 
       let indexPage: any = null
       for (const page of _pages) {
-        if (page.filename !== 'index.html') {
-          rewrites.push(createRewire(page.template, page, baseUrl, keys))
-        } else {
+        rewrites.push(createRewire(page.filename, page, baseUrl, keys))
+        if (page.filename === 'index.html') {
           indexPage = page
         }
       }

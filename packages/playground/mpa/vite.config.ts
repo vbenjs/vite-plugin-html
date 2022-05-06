@@ -14,7 +14,7 @@ export default defineConfig({
       minify: true,
       pages: [
         {
-          entry: 'src/main.ts',
+          entry: '/src/main.ts',
           filename: 'index.html',
           template: 'index.html',
           injectOptions: {
@@ -34,7 +34,7 @@ export default defineConfig({
           },
         },
         {
-          entry: 'src/other-main.ts',
+          entry: '/src/other-main.ts',
           filename: 'other.html',
           template: 'other.html',
           injectOptions: {

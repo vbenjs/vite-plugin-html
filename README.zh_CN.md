@@ -57,9 +57,9 @@ export default defineConfig({
       minify: true,
       /**
        * 在这里写entry后，你将不需要在`index.html`内添加 script 标签，原有标签需要删除
-       * @default src/main.ts
+       * @default /src/main.ts
        */
-      entry: 'src/main.ts',
+      entry: '/src/main.ts',
       /**
        * 如果你想将 `index.html`存放在指定文件夹，可以修改它，否则不需要配置
        * @default index.html
@@ -101,7 +101,7 @@ export default defineConfig({
       minify: true,
       pages: [
         {
-          entry: 'src/main.ts',
+          entry: '/src/main.ts',
           filename: 'index.html',
           template: 'public/index.html',
           injectOptions: {
@@ -152,13 +152,13 @@ export default defineConfig({
 
 ### UserOptions
 
-| 参数     | 类型                     | 默认值        | 说明             |
-| -------- | ------------------------ | ------------- | ---------------- |
-| entry    | `string`                 | `src/main.ts` | 入口文件         |
-| template | `string`                 | `index.html`  | 模板的相对路径   |
-| inject   | `InjectOptions`          | -             | 注入 HTML 的数据 |
-| minify   | `boolean｜MinifyOptions` | -             | 是否压缩 html    |
-| pages    | `PageOption`             | -             | 多页配置         |
+| 参数     | 类型                     | 默认值         | 说明             |
+| -------- | ------------------------ | -------------- | ---------------- |
+| entry    | `string`                 | `/src/main.ts` | 入口文件         |
+| template | `string`                 | `index.html`   | 模板的相对路径   |
+| inject   | `InjectOptions`          | -              | 注入 HTML 的数据 |
+| minify   | `boolean｜MinifyOptions` | -              | 是否压缩 html    |
+| pages    | `PageOption`             | -              | 多页配置         |
 
 ### InjectOptions
 
@@ -176,12 +176,12 @@ export default defineConfig({
 
 ### PageOption
 
-| 参数          | 类型            | 默认值        | 说明             |
-| ------------- | --------------- | ------------- | ---------------- |
-| filename      | `string`        | -             | html 文件名      |
-| template      | `string`        | `index.html`  | 模板的相对路径   |
-| entry         | `string`        | `src/main.ts` | 入口文件         |
-| injectOptions | `InjectOptions` | -             | 注入 HTML 的数据 |
+| 参数          | 类型            | 默认值         | 说明             |
+| ------------- | --------------- | -------------- | ---------------- |
+| filename      | `string`        | -              | html 文件名      |
+| template      | `string`        | `index.html`   | 模板的相对路径   |
+| entry         | `string`        | `/src/main.ts` | 入口文件         |
+| injectOptions | `InjectOptions` | -              | 注入 HTML 的数据 |
 
 ### MinifyOptions
 

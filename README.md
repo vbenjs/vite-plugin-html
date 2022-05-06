@@ -55,9 +55,9 @@ export default defineConfig({
       minify: true,
       /**
        * After writing entry here, you will not need to add script tags in `index.html`, the original tags need to be deleted
-       * @default src/main.ts
+       * @default /src/main.ts
        */
-      entry: 'src/main.ts',
+      entry: '/src/main.ts',
       /**
        * If you want to store `index.html` in the specified folder, you can modify it, otherwise no configuration is required
        * @default index.html
@@ -99,7 +99,7 @@ export default defineConfig({
       minify: true,
       pages: [
         {
-          entry: 'src/main.ts',
+          entry: '/src/main.ts',
           filename: 'index.html',
           template: 'public/index.html',
           injectOptions: {
@@ -119,7 +119,7 @@ export default defineConfig({
           },
         },
         {
-          entry: 'src/other-main.ts',
+          entry: '/src/other-main.ts',
           filename: 'other.html',
           template: 'public/other.html',
           injectOptions: {
@@ -150,13 +150,13 @@ export default defineConfig({
 
 ### UserOptions
 
-| Parameter | Types                    | Default       | Description                   |
-| --------- | ------------------------ | ------------- | ----------------------------- |
-| entry     | `string`                 | `src/main.ts` | entry file path               |
-| template  | `string`                 | `index.html`  | relative path to the template |
-| inject    | `InjectOptions`          | -             | Data injected into HTML       |
-| minify    | `boolean｜MinifyOptions` | -             | whether to compress html      |
-| pages     | `PageOption`             | -             | Multi-page configuration      |
+| Parameter | Types                    | Default        | Description                   |
+| --------- | ------------------------ | -------------- | ----------------------------- |
+| entry     | `string`                 | `/src/main.ts` | entry file path               |
+| template  | `string`                 | `index.html`   | relative path to the template |
+| inject    | `InjectOptions`          | -              | Data injected into HTML       |
+| minify    | `boolean｜MinifyOptions` | -              | whether to compress html      |
+| pages     | `PageOption`             | -              | Multi-page configuration      |
 
 ### InjectOptions
 
@@ -174,12 +174,12 @@ By default, the contents of the `.env` file will be injected into index.html, si
 
 ### PageOption
 
-| Parameter     | Types           | Default       | Description                   |
-| ------------- | --------------- | ------------- | ----------------------------- |
-| filename      | `string`        | -             | html file name                |
-| template      | `string`        | `index.html`  | relative path to the template |
-| entry         | `string`        | `src/main.ts` | entry file path               |
-| injectOptions | `InjectOptions` | -             | Data injected into HTML       |
+| Parameter     | Types           | Default        | Description                   |
+| ------------- | --------------- | -------------- | ----------------------------- |
+| filename      | `string`        | -              | html file name                |
+| template      | `string`        | `index.html`   | relative path to the template |
+| entry         | `string`        | `/src/main.ts` | entry file path               |
+| injectOptions | `InjectOptions` | -              | Data injected into HTML       |
 
 ### MinifyOptions
 
