@@ -124,13 +124,13 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
         for (const page of pages) {
           const dir = path.dirname(page.template)
           if (!ignoreDirs.includes(dir)) {
-            outputDirs.push(dir)
+            outputDirs.push(dir.startsWith('/') ? dir.substring(1) : dir)
           }
         }
       } else {
         const dir = path.dirname(template)
         if (!ignoreDirs.includes(dir)) {
-          outputDirs.push(dir)
+          outputDirs.push(dir.startsWith('/') ? dir.substring(1) : dir)
         }
       }
       const cwd = path.resolve(viteConfig.root, viteConfig.build.outDir)
@@ -153,10 +153,14 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
       )
       await Promise.all(
         htmlDirs.map(async (item) => {
-          const isEmpty = await isDirEmpty(item)
-          if (isEmpty) {
-            return fs.remove(item)
-          }
+          const removeEmptyDir = async (p) => {
+            const isEmpty = await isDirEmpty(p)
+            if (isEmpty) {
+              await fs.remove(p)
+              await removeEmptyDir(path.dirname(p))
+            }
+          };
+          return removeEmptyDir(item)
         }),
       )
     },
