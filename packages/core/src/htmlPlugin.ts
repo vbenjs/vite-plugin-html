@@ -238,7 +238,7 @@ export function getPage(
 ) {
   let page: PageOption
   if (isMpa(viteConfig) || pages?.length) {
-    page = getPageConfig(name, pages, DEFAULT_TEMPLATE)
+    page = getPageConfig(name, pages, DEFAULT_TEMPLATE, inject)
   } else {
     page = createSpaPage(entry, template, inject)
   }
@@ -288,10 +288,12 @@ export function getPageConfig(
   htmlName: string,
   pages: Pages,
   defaultPage: string,
+  inject: InjectOptions = {},
 ): PageOption {
   const defaultPageOption: PageOption = {
     filename: defaultPage,
     template: `./${defaultPage}`,
+    injectOptions: inject,
   }
 
   const page = pages.filter((page) => {
