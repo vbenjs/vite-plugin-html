@@ -337,6 +337,9 @@ function createRewire(
       if (excludeBaseUrl === '/') {
         return template
       }
+      if (/^\/(?:[^/]+\/)*[^/]+$/.test(excludeBaseUrl)) {
+        return excludeBaseUrl
+      }
       const isApiUrl = proxyUrlKeys.some((item) =>
         pathname.startsWith(path.resolve(baseUrl, item)),
       )
