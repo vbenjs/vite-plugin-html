@@ -344,7 +344,7 @@ function createRewire(
       const isApiUrl = proxyUrlKeys.some((item) =>
         pathname.startsWith(path.resolve(baseUrl, item)),
       )
-      return isApiUrl ? excludeBaseUrl : template;
+      return isApiUrl ? excludeBaseUrl : template
     },
   }
 }
