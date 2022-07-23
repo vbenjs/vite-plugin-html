@@ -337,11 +337,14 @@ function createRewire(
       if (excludeBaseUrl === '/') {
         return template
       }
+      const isStatic = /^\/(?:[^/]+\/)*[^/]+$/.test(excludeBaseUrl)
+      if (isStatic) {
+        return pathname
+      }
       const isApiUrl = proxyUrlKeys.some((item) =>
         pathname.startsWith(path.resolve(baseUrl, item)),
       )
-      const isStatic = /^\/(?:[^/]+\/)*[^/]+$/.test(excludeBaseUrl)
-      return isApiUrl || isStatic ? excludeBaseUrl : template;
+      return isApiUrl ? excludeBaseUrl : template;
     },
   }
 }
