@@ -3,7 +3,7 @@
   "version": "3.2.0",
   "private": true,
   "scripts": {
-    "stub": "pnpm run prepack --filter ./packages -- --stub",
+    "stub": "pnpm --filter ./packages run prepack -- --stub",
     "postinstall": "pnpm run stub",
     "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "lint:pretty": "pretty-quick --staged",
