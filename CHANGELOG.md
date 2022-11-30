@@ -35,7 +35,7 @@
 - history mode support ([4b0a54f](https://github.com/vbenjs/vite-plugin-html/commit/4b0a54fd08dd3e065b239ef0587dc683263db343))
 - make sure template defaults are correct ([697626c](https://github.com/vbenjs/vite-plugin-html/commit/697626cb62db42c1853788ac4019a834822b19e5))
 
-## [3.0.2](https://github.com/vbenjs/vite-plugin-html/compare/v3.0.0...v3.0.2) (2022-01-28)
+## [3.0.3](https://github.com/vbenjs/vite-plugin-html/compare/v3.0.0...v3.0.3) (2022-01-28)
 
 ### Bug Fixes
 
