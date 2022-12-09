@@ -3,7 +3,7 @@ import type { InjectOptions, PageOption, Pages, UserOptions } from './typing'
 import { render } from 'ejs'
 import { isDirEmpty, loadEnv } from './utils'
 import { normalizePath } from 'vite'
-import parse from 'node-html-parser'
+import { parse } from 'node-html-parser'
 import fs from 'fs-extra'
 import path from 'pathe'
 import fg from 'fast-glob'
@@ -254,7 +254,6 @@ export function removeEntryScript(html: string, verbose = false) {
   if (!html) {
     return html
   }
-
   const root = parse(html, { comment: true })
   const scriptNodes = root.querySelectorAll('script[type=module]') || []
   const removedNode: string[] = []
