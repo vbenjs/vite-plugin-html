@@ -153,9 +153,17 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
       )
       await Promise.all(
         htmlDirs.map(async (item) => {
-          const isEmpty = await isDirEmpty(item)
-          if (isEmpty) {
-            return fs.remove(item)
+          let dir = item
+          while (dir != cwd) {
+            const isExists = await fs.exists(dir)
+            if (!isExists) {
+              return
+            }
+            const isEmpty = await isDirEmpty(item)
+            if (isEmpty) {
+              await fs.remove(item)
+            }
+            dir = path.resolve(dir, '..')
           }
         }),
       )
