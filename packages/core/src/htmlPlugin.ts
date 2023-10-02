@@ -295,7 +295,11 @@ export function getPageConfig(
   }
 
   const page = pages.filter((page) => {
-    return path.resolve('/' + page.template) === path.resolve('/' + htmlName)
+    // Path to specified file path, if not to template path
+    return (
+      path.resolve('/' + page.filename || page.template) ===
+      path.resolve('/' + htmlName)
+    )
   })?.[0]
   return page ?? defaultPageOption ?? undefined
 }
@@ -332,7 +336,8 @@ function createRewire(
 
       const excludeBaseUrl = pathname.replace(baseUrl, '/')
 
-      const template = path.resolve(baseUrl, page.template)
+      // Path to specified file path, if not to template path
+      const template = path.resolve(baseUrl, page.filename || page.template)
 
       if (excludeBaseUrl === '/') {
         return template
