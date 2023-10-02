@@ -1,7 +1,6 @@
 {
   "name": "vite-plugin-html-v2",
   "version": "3.2.0",
-  "private": true,
   "scripts": {
     "stub": "pnpm run prepack --filter ./packages -- --stub",
     "postinstall": "pnpm run stub",
