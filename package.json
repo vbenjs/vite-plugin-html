@@ -15,12 +15,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vbenjs/vite-plugin-html"
+    "url": "https://github.com/yongpark/vite-plugin-html-v2"
   },
   "bugs": {
-    "url": "https://github.com/vbenjs/vite-plugin-html/issues"
+    "url": "https://github.com/yongpark/vite-plugin-html-v2/issues"
   },
-  "homepage": "https://github.com/vbenjs/vite-plugin-html/tree/master/#readme",
+  "homepage": "https://github.com/yongpark/vite-plugin-html-v2/tree/master/#readme",
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",
     "@commitlint/config-conventional": "^16.2.1",
