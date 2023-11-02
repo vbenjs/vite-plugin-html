@@ -254,8 +254,7 @@ export function removeEntryScript(html: string, verbose = false) {
   if (!html) {
     return html
   }
-
-  const root = parse(html)
+  const root = parse(html, { comment: true })
   const scriptNodes = root.querySelectorAll('script[type=module]') || []
   const removedNode: string[] = []
   scriptNodes.forEach((item) => {
@@ -268,6 +267,7 @@ export function removeEntryScript(html: string, verbose = false) {
       removedNode.toString(),
     )} is deleted. You may also delete it from the index.html.
         `)
+  consola.warn(root.toString())
   return root.toString()
 }
 

@@ -58,4 +58,24 @@ describe('function test.', () => {
 </html>
 `)
   })
+
+  test('renderHtml must keep comment with entry.', async () => {
+    const content = await renderHtml(`
+<!DOCTYPE html>
+<html>
+<!--comment-->
+</html>
+`, {
+  injectOptions: {},
+  viteConfig: {} as any,
+  env: {},
+  entry: 'fake'
+},)
+  expect(content).toEqual(`
+<!DOCTYPE html>
+<html>
+<!--comment-->
+</html>
+`)
+  })
 })
