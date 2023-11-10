@@ -334,6 +334,10 @@ function createRewire(
 
       const template = path.resolve(baseUrl, page.template)
 
+      if (excludeBaseUrl.startsWith("/static")) {
+        return excludeBaseUrl;
+      }
+
       if (excludeBaseUrl === '/') {
         return template
       }
