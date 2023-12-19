@@ -26,6 +26,27 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
 
   let viteConfig: ResolvedConfig
   let env: Record<string, any> = {}
+  const transformIndexHtmlHandler = async (html, ctx) => {
+    const url = ctx.filename
+    const base = viteConfig.base
+    const excludeBaseUrl = url.replace(base, '/')
+    const htmlName = path.relative(process.cwd(), excludeBaseUrl)
+
+    const page = getPage(userOptions, htmlName, viteConfig)
+    const { injectOptions = {} } = page
+    const _html = await renderHtml(html, {
+      injectOptions,
+      viteConfig,
+      env,
+      entry: page.entry || entry,
+      verbose,
+    })
+    const { tags = [] } = injectOptions
+    return {
+      html: _html,
+      tags: tags,
+    }
+  }
 
   return {
     name: 'vite:html',
@@ -93,30 +114,18 @@ export function createPlugin(userOptions: UserOptions = {}): PluginOption {
       )
     },
 
-    transformIndexHtml: {
-      enforce: 'pre',
-      async transform(html, ctx) {
-        const url = ctx.filename
-        const base = viteConfig.base
-        const excludeBaseUrl = url.replace(base, '/')
-        const htmlName = path.relative(process.cwd(), excludeBaseUrl)
-
-        const page = getPage(userOptions, htmlName, viteConfig)
-        const { injectOptions = {} } = page
-        const _html = await renderHtml(html, {
-          injectOptions,
-          viteConfig,
-          env,
-          entry: page.entry || entry,
-          verbose,
-        })
-        const { tags = [] } = injectOptions
-        return {
-          html: _html,
-          tags: tags,
-        }
+    transformIndexHtml: userOptions.viteNext
+      ?
+      {
+        // @ts-ignore
+        order: 'pre',
+        handler: transformIndexHtmlHandler,
+      }
+      :
+      {
+        enforce: 'pre',
+        transform: transformIndexHtmlHandler,
       },
-    },
     async closeBundle() {
       const outputDirs: string[] = []
 

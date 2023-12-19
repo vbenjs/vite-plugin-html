@@ -58,4 +58,9 @@ export interface UserOptions {
    * @default false
    */
   verbose?: boolean
+
+  /**
+   * fit vite2+
+   */
+  viteNext?: boolean
 }
