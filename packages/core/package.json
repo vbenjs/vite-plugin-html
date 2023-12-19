@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-html",
+  "name": "ryomahan-vite-plugin-html",
   "version": "3.2.0",
   "description": "A plugin for vite to Minimize index.html and use lodash.template template syntax in index.html",
   "main": "dist/index.cjs",
@@ -34,13 +34,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vbenjs/vite-plugin-html",
+    "url": "https://github.com/ryomahan/vite-plugin-html",
     "directory": "packages/core"
   },
   "bugs": {
-    "url": "https://github.com/vbenjs/vite-plugin-html/issues"
+    "url": "https://github.com/ryomahan/vite-plugin-html/issues"
   },
-  "homepage": "https://github.com/vbenjs/vite-plugin-html/tree/master/#readme",
+  "homepage": "https://github.com/ryomahan/vite-plugin-html/tree/master/#readme",
   "dependencies": {
     "@rollup/pluginutils": "^4.2.0",
     "colorette": "^2.0.16",

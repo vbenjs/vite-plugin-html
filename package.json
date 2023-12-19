@@ -1,7 +1,7 @@
 {
-  "name": "vite-plugin-html-monorepo",
-  "version": "3.2.0",
-  "private": true,
+  "name": "ryomahan-vite-plugin-html-monorepo",
+  "version": "3.2.1",
+  "private": false,
   "scripts": {
     "stub": "pnpm run prepack --filter ./packages -- --stub",
     "postinstall": "pnpm run stub",
@@ -12,16 +12,16 @@
     "preinstall": "npx only-allow pnpm",
     "test": "vitest"
   },
-  "author": "Vben",
+  "author": "RyomaHan",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vbenjs/vite-plugin-html"
+    "url": "https://github.com/ryomahan/vite-plugin-html"
   },
   "bugs": {
-    "url": "https://github.com/vbenjs/vite-plugin-html/issues"
+    "url": "https://github.com/ryomahan/vite-plugin-html/issues"
   },
-  "homepage": "https://github.com/vbenjs/vite-plugin-html/tree/master/#readme",
+  "homepage": "https://github.com/ryomahan/vite-plugin-html/tree/master/#readme",
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",
     "@commitlint/config-conventional": "^16.2.1",
@@ -31,7 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
     "commitizen": "^4.2.4",
-    "conventional-changelog-cli": "^2.2.2",
+    "conventional-changelog-cli": "^4.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
