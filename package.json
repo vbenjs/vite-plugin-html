@@ -1,7 +1,7 @@
 {
   "name": "ryomahan-vite-plugin-html-monorepo",
   "version": "3.2.2",
-  "private": false,
+  "private": true,
   "scripts": {
     "stub": "pnpm run prepack --filter ./packages -- --stub",
     "postinstall": "pnpm run stub",
