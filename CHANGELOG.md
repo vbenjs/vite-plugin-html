@@ -1,3 +1,9 @@
+# [3.2.1](https://github.com/vbenjs/vite-plugin-html/compare/v3.0.6...v3.2.1) (2023-12-26)
+
+### Features
+
+- support vite5.0
+
 # [3.2.0](https://github.com/vbenjs/vite-plugin-html/compare/v3.0.6...v3.2.0) (2022-03-15)
 
 ### Bug Fixes
