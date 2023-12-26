@@ -84,6 +84,10 @@ export default defineConfig({
           },
         ],
       },
+      /**
+       * 如果你使用的 vite 版本高于 5.0.0-beta.13，可以将 viteNext 设置为 true 来进行兼容
+       */
+      viteNext: false,
     }),
   ],
 })
@@ -152,13 +156,14 @@ export default defineConfig({
 
 ### UserOptions
 
-| 参数     | 类型                     | 默认值        | 说明             |
-| -------- | ------------------------ | ------------- | ---------------- |
-| entry    | `string`                 | `src/main.ts` | 入口文件         |
-| template | `string`                 | `index.html`  | 模板的相对路径   |
-| inject   | `InjectOptions`          | -             | 注入 HTML 的数据 |
-| minify   | `boolean｜MinifyOptions` | -             | 是否压缩 html    |
-| pages    | `PageOption`             | -             | 多页配置         |
+| 参数     | 类型                     | 默认值        | 说明                            |
+| -------- | ------------------------ | ------------- | ------------------------------- |
+| entry    | `string`                 | `src/main.ts` | 入口文件                        |
+| template | `string`                 | `index.html`  | 模板的相对路径                  |
+| inject   | `InjectOptions`          | -             | 注入 HTML 的数据                |
+| minify   | `boolean｜MinifyOptions` | -             | 是否压缩 html                   |
+| pages    | `PageOption`             | -             | 多页配置                        |
+| viteNext | `boolean`                | false         | 用于开启是否兼容最新版本的 vite |
 
 ### InjectOptions
 
