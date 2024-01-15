@@ -341,7 +341,7 @@ function createRewire(
   return {
     from: new RegExp(`^/${reg}*`),
     to({ parsedUrl }: any) {
-      const pathname: string = parsedUrl.pathname
+      const pathname: string = parsedUrl.path
 
       const excludeBaseUrl = pathname.replace(baseUrl, '/')
 
