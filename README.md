@@ -82,10 +82,6 @@ export default defineConfig({
           },
         ],
       },
-      /**
-       * If you are using vite that version higher than 5.0.0-beta.13, you can set viteNext to true to align vite's config
-       */
-      viteNext: false,
     }),
   ],
 })
@@ -161,7 +157,6 @@ export default defineConfig({
 | inject    | `InjectOptions`          | -             | Data injected into HTML                           |
 | minify    | `boolean｜MinifyOptions` | -             | whether to compress html                          |
 | pages     | `PageOption`             | -             | Multi-page configuration                          |
-| viteNext  | `boolean`                | false         | set to true to support the latest version of vite |
 
 ### InjectOptions
 
