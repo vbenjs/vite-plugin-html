@@ -76,6 +76,8 @@ export default defineConfig({
         },
         tags: [
           {
+            // injectTo 的值为：'head' | 'body' | 'head-prepend' | 'body-prepend'
+            // 请参考 https://vitejs.dev/guide/api-plugin.html#transformindexhtml
             injectTo: 'body-prepend',
             tag: 'div',
             attrs: {
