@@ -355,6 +355,7 @@ function createRewire(
         return template
       }
       const isApiUrl = proxyUrlKeys.some((item) =>
+        item.startsWith('^') && new RegExp(item).test(pathname) ||
         pathname.startsWith(path.resolve(baseUrl, item)),
       )
       return isApiUrl ? parsedUrl.path : template
