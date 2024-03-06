@@ -1,11 +1,10 @@
 const http = require('http')
-const url = require('url')
+const { URL } = require('url')
 
 const port = 8080
 
 const server = http.createServer((req, res) => {
-  const urlObject = url.parse(req.url)
-  const { pathname } = urlObject
+  const { pathname } = new URL(req.url)
 
   // api开头的是API请求
   if (pathname.startsWith('/api')) {
