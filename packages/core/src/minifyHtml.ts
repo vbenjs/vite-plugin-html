@@ -14,6 +14,7 @@ function getOptions(minify: boolean): MinifyOptions {
     removeStyleLinkTypeAttributes: minify,
     useShortDoctype: minify,
     minifyCSS: minify,
+    minifyJS: minify,
   }
 }
 
