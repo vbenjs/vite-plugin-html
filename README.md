@@ -20,7 +20,7 @@
 yarn add vite-plugin-html -D
 ```
 
-或
+or
 
 ```bash
 npm i vite-plugin-html -D
