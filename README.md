@@ -74,6 +74,8 @@ export default defineConfig({
         },
         tags: [
           {
+            // The value of injectTo is: 'head' | 'body' | 'head-prepend' | 'body-prepend'
+            // Please reference to https://vitejs.dev/guide/api-plugin.html#transformindexhtml
             injectTo: 'body-prepend',
             tag: 'div',
             attrs: {
