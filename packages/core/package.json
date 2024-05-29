@@ -48,7 +48,7 @@
     "consola": "^2.15.3",
     "dotenv": "^16.0.0",
     "dotenv-expand": "^8.0.2",
-    "ejs": "^3.1.6",
+    "ejs": "^3.1.10",
     "fast-glob": "^3.2.11",
     "fs-extra": "^10.0.1",
     "html-minifier-terser": "^6.1.0",
