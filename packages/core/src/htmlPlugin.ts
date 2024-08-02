@@ -355,8 +355,10 @@ function createRewire(
         return template
       }
       const isApiUrl = proxyUrlKeys.some((item) =>
-        pathname.startsWith(path.resolve(baseUrl, item)),
-      )
+		    item[0] === '^'
+			    ? new RegExp(item).test(pathname)
+			    : pathname.startsWith(path.resolve(baseUrl, item))
+	    );
       return isApiUrl ? parsedUrl.path : template
     },
   }
