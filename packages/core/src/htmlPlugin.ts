@@ -338,8 +338,9 @@ function createRewire(
   baseUrl: string,
   proxyUrlKeys: string[],
 ) {
+  const regWithBase = path.join(baseUrl, reg)
   return {
-    from: new RegExp(`^/${reg}*`),
+    from: new RegExp(`^/${reg}*|^${regWithBase}*`),
     to({ parsedUrl }: any) {
       const pathname: string = parsedUrl.path
 
