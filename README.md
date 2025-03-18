@@ -144,6 +144,12 @@ export default defineConfig({
 })
 ```
 
+Static Files Handling
+Note: This plugin does not process or rewrite URLs starting with /static/ from the root (e.g., ```<img src="/static/img/example.jpg">``` or ```<a href="/static/files/example.pdf">```). These paths are ignored by the plugin's rewriting logic and remain unchanged in the output HTML. If you need to store static files under /static/, ensure they are served correctly by your server or build setup, as they won't be bundled or optimized by vite-plugin-html.
+
+For example:
+Use ```<img src="/static/img/example.jpg">``` and place the file with directory img/example.jpg in the static/ directory if you want that it and served directly.
+
 ## Parameter Description
 
 `createHtmlPlugin(options: UserOptions)`
